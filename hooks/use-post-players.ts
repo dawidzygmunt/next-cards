@@ -10,12 +10,15 @@ const UsePostPlayer = () => {
   return useMutation({
     mutationKey: ["players"],
     mutationFn: async (player: Player) => {
-      return await axios.post("/api/v1/players", player);
+      return await axios.post("/api/players", player);
     },
     onMutate: async (player) => {
       await queryClient.cancelQueries({ queryKey: ["players"] });
       const previousPlayers = queryClient.getQueryData(["players"]);
-      queryClient.setQueryData(["players"], (old: string) => [...old, player]);
+      queryClient.setQueryData(["players"], (old: string[]) => [
+        ...old,
+        player,
+      ]);
       return { previousPlayers };
     },
     onSettled: () => {

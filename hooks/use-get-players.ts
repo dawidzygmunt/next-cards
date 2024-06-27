@@ -5,7 +5,7 @@ const UseGetPlayers = () => {
   return useQuery({
     queryKey: ["players"],
     queryFn: async () => {
-      const { data } = await axios.get("/api/v1/players");
+      const { data } = await axios.get("/api/players");
       return data;
     },
   });

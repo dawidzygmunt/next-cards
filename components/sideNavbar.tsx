@@ -1,21 +1,8 @@
 "use client";
 
-import {
-  AlignHorizontalJustifyEnd,
-  BookDashed,
-  ClipboardSignature,
-  LibraryBig,
-  LogOut,
-  Mail,
-  Settings,
-  SignalMedium,
-  Ticket,
-  User,
-} from "lucide-react";
-import Image from "next/image";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { MainNav } from "./main-nav";
-import { UserProfile } from "@clerk/nextjs";
 
 function SideNavbar() {
   const router = useRouter();
@@ -31,10 +18,17 @@ function SideNavbar() {
           <span className="text-red-500">Party</span>
         </h2>
       </div>
-      <div className="flex flex-col bg-white mx-5 rounded-xl font-bold relative h-[88vh] shadow-2xl">
+      <div className="flex flex-col bg-white mx-5 rounded-xl font-bold relative h-[88vh] shadow-2xl justify-between">
         <MainNav />
+        <div className="m-4">
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
       </div>
-      {/* <UserProfile /> */}
     </aside>
   );
 }

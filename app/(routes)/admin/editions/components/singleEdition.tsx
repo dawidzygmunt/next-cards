@@ -3,46 +3,40 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu"
-import axios from "axios"
-import { Edit, Trash2 } from "lucide-react"
-import { useState } from "react"
-import toast from "react-hot-toast"
+} from "@/components/ui/context-menu";
+import axios from "axios";
+import { Edit, Trash2 } from "lucide-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface SingleEditionProps {
   data: {
-    _id: string,
-    nazwa: string
-  }
+    _id: string;
+    nazwa: string;
+  };
 }
 
-
-
-const SingleEdition: React.FC<SingleEditionProps> = ({
-  data,
-}) => {
-
-  const [display, setDisplay] = useState(true)
+const SingleEdition: React.FC<SingleEditionProps> = ({ data }) => {
+  const [display, setDisplay] = useState(true);
 
   const handleEdit = (e: React.MouseEvent) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await axios.delete(`/api/v1/editions/${data._id}`)
-      setDisplay(false)
-      toast.success("Usunięto Edycję")
+      await axios.delete(`/api/v1/editions/${data._id}`);
+      setDisplay(false);
+      toast.success("Usunięto Edycję");
     } catch (error) {
-      toast.error("Nie udało się usunąć Edycji")
+      toast.error("Nie udało się usunąć Edycji");
     }
-  }
-
+  };
 
   return (
     <>
-      {display &&
+      {display && (
         <div className="mx-2">
           <ContextMenu>
             <ContextMenuTrigger>
@@ -56,14 +50,20 @@ const SingleEdition: React.FC<SingleEditionProps> = ({
               </div>
             </ContextMenuTrigger>
             <ContextMenuContent>
-              <ContextMenuItem onClick={handleEdit}><Edit size={18} className="mr-2" /> Edytuj</ContextMenuItem>
-              <ContextMenuItem onClick={handleDelete}> <Trash2 size={18} className="mr-2" />Usuń</ContextMenuItem>
+              <ContextMenuItem onClick={handleEdit}>
+                <Edit size={18} className="mr-2" /> Edytuj
+              </ContextMenuItem>
+              <ContextMenuItem onClick={handleDelete}>
+                {" "}
+                <Trash2 size={18} className="mr-2" />
+                Usuń
+              </ContextMenuItem>
             </ContextMenuContent>
           </ContextMenu>
         </div>
-      }
+      )}
     </>
-  )
-}
+  );
+};
 
-export default SingleEdition
+export default SingleEdition;

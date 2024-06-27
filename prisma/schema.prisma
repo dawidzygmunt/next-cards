@@ -13,13 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          String       @id @default(cuid())
-  email       String       @unique
-  password    String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  Collections Collection[]
+model Card {
+  id         String   @id @default(cuid())
+  type       String
+  content    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  amount     Int
+  punishment Int
+
+  Collection   Collection? @relation(fields: [collectionId], references: [id])
+  collectionId String?
 }
 
 model Collection {
@@ -27,21 +31,66 @@ model Collection {
   name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Cards     Card[]
 
-  userId String?
-  User   User?   @relation(fields: [userId], references: [id])
+  Cards           Card[]
+  userCollections UserCollection[]
 }
 
-model Card {
-  id           String      @id @default(cuid())
-  type         String
-  content      String
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  amount       Int
-  punishment   Int
-  userId       String?
-  Collection   Collection? @relation(fields: [collectionId], references: [id])
-  collectionId String?
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userCollections UserCollection[]
+  players         Player[]
+  game            Game?
 }
+
+model Player {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  clerkId   String
+  gameId    String
+  name      String
+
+  user User @relation(fields: [clerkId], references: [clerkId])
+  game Game @relation(fields: [gameId], references: [id])
+}
+
+model UserCollection {
+  clerkId String
+  user    User   @relation(fields: [clerkId], references: [clerkId])
+
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id])
+
+  @@unique([clerkId, collectionId])
+}
+
+model Game {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  status    String
+
+  clerkId String?  @unique
+  user    User?    @relation(fields: [clerkId], references: [clerkId])
+  Players Player[]
+}
+
+// model AssignedCard {
+//   id               String   @id @default(cuid())
+//   createdAt        DateTime @default(now())
+//   updatedAt        DateTime @updatedAt
+//   remainingRepeats Int
+//   gameId           String
+//   cardId           String
+//   userId           String
+//   status           String
+
+//   game Game @relation(fields: [gameId], references: [id])
+//   card Card @relation(fields: [cardId], references: [id])
+//   user User @relation(fields: [userId], references: [id])
+// }

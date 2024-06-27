@@ -18,11 +18,7 @@ import UseGetPlayers from "@/hooks/use-get-players";
 import UsePostPlayer from "@/hooks/use-post-players";
 import SinglePlayer from "./components/single-player";
 import { useRouter } from "next/navigation";
-
-interface Player {
-  _id: string;
-  playerName: string;
-}
+import { Player } from "@prisma/client";
 
 const formSchema = z.object({
   playerName: z
@@ -40,7 +36,7 @@ const NewGame = () => {
   const { data: players } = UseGetPlayers();
   const mutation = UsePostPlayer();
 
-  const cloneCollection = async () => {
+  const newGame = async () => {
     try {
       const response = await axios.get("/api/v1/cloneData");
       console.log(response.data.message);
@@ -50,8 +46,7 @@ const NewGame = () => {
   };
 
   const goMainButtonHandle: React.MouseEventHandler = () => {
-    cloneCollection();
-    router.push("/main");
+    router.push("/game");
   };
 
   // 1. Define your form.
@@ -68,7 +63,7 @@ const NewGame = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col w-full min-h-screen items-center mt-20">
       <div className="bg-white shadow-xl px-10 py-4 pb-6 rounded-md">
         <h3>Nazwa Gracza</h3>
         <Form {...form}>
@@ -104,11 +99,11 @@ const NewGame = () => {
 
       <div className="flex flex-col mt-20">
         {players &&
-          players.map((player: Player, index: number) => (
+          players.map((player: Player) => (
             <SinglePlayer
-              key={index}
-              playerID={player._id}
-              playerName={player.playerName}
+              key={player.id}
+              playerID={player.id}
+              playerName={player.name}
             />
           ))}
       </div>

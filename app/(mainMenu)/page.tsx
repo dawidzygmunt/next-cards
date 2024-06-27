@@ -1,4 +1,5 @@
 "use client";
+
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
