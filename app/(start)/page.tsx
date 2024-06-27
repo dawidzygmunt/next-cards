@@ -17,7 +17,7 @@ const MainMenu = () => {
             <Button className="w-[300px] py-6">Nowa gra</Button>
           </Link>
 
-          <Link href="/main">
+          <Link href="/game">
             <Button className="w-[300px] py-6">Kontynuj</Button>
           </Link>
 

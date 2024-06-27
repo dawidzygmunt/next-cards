@@ -64,8 +64,18 @@ const config = {
         third: "moveInCircle 40s linear infinite",
         fourth: "moveHorizontal 40s ease infinite",
         fifth: "moveInCircle 20s ease infinite",
+        scrollUp: "scrollUp 0.5s forwards",
+        scrollDown: "scrollDown 2s forwards",
       },
       keyframes: {
+        scrollUp: {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(40%)" },
+        },
+        scrollDown: {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-300%)" },
+        },
         moveHorizontal: {
           "0%": {
             transform: "translateX(-50%) translateY(-10%)",
