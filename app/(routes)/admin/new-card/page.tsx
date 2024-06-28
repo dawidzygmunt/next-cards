@@ -1,8 +1,9 @@
-"use client";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+"use client"
+
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -10,9 +11,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import axios from "axios";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import axios from "axios"
 
 import {
   Select,
@@ -20,62 +21,71 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card"
 
-import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast"
 
-import { Textarea } from "@/components/ui/textarea";
-import CardBasic from "@/components/card-basic";
-import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea"
+import CardBasic from "@/components/card-basic"
+import { useEffect, useState } from "react"
+import getAllCollectionsForTruthOrDare from "@/actions/cards/get-all-collections-for-truth-or-dare"
+import { Collection } from "@prisma/client"
+import { addSingleCard } from "@/actions/cards/add-single-card"
 
 const formSchema = z.object({
-  typ: z.string().min(2, {
+  type: z.string().min(2, {
     message: "Wybierz typ karty",
   }),
-  wersja: z.string().min(2, {
+  collectionId: z.string().min(2, {
     message: "Wybierz wersję karty",
   }),
-  ilosc: z.coerce.number().min(1, {
+  amount: z.coerce.number().min(1, {
     message: "Wybierz ilość powtórzeń",
   }),
-  tresc: z.string().min(5, {
+  content: z.string().min(5, {
     message: "Wpisz treść karty",
   }),
-  kara: z.string().min(1, {
+  punishment: z.coerce.number().min(1, {
     message: "Wybierz karę",
   }),
-});
+})
 
 const AdminNewCard = () => {
+  const [data, setData] = useState<Collection[]>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getAllCollectionsForTruthOrDare()
+      if ("error" in result) {
+        toast.error(result.error)
+        return
+      }
+      setData(result)
+    }
+    fetchData()
+  }, [])
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      typ: "Prawda",
-      wersja: "Classic",
-      ilosc: 1,
-      tresc: "",
-      kara: "1",
+      type: "Prawda",
+      collectionId: data[0]?.name || "",
+      amount: 1,
+      punishment: 1,
     },
-  });
+  })
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    try {
-      const data = form.getValues();
-      const updatedData = { ...data, kara: punishment };
-      await axios.post("/api/v1/cards/", updatedData);
-      toast.success("Dodano kartę");
-      form.reset();
-    } catch (error) {
-      toast.error("Nie udało się dodać karty");
+    const result = await addSingleCard(values)
+    if ("error" in result) {
+      toast.error(result.error)
+      return
     }
+    toast.success("Dodano kartę")
   }
-
-  const [punishment, setPunishment] = useState("1");
 
   return (
     <div className="flex gap-4">
@@ -89,7 +99,7 @@ const AdminNewCard = () => {
               >
                 <FormField
                   control={form.control}
-                  name="typ"
+                  name="type"
                   render={({ field }) => (
                     <FormItem>
                       <Select
@@ -113,13 +123,13 @@ const AdminNewCard = () => {
 
                 <FormField
                   control={form.control}
-                  name="wersja"
+                  name="collectionId"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex ">Wersja</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        // defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger className="w-[180px] text-black">
@@ -129,6 +139,14 @@ const AdminNewCard = () => {
                         <SelectContent>
                           <SelectItem value="Classic">Classic</SelectItem>
                           <SelectItem value="Spicy">Spicy</SelectItem>
+                          {data.map((collection) => (
+                            <SelectItem
+                              key={collection.id}
+                              value={collection.id}
+                            >
+                              {collection.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -138,7 +156,7 @@ const AdminNewCard = () => {
 
                 <FormField
                   control={form.control}
-                  name="ilosc"
+                  name="amount"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex">Ilość powtórzeń</FormLabel>
@@ -152,7 +170,7 @@ const AdminNewCard = () => {
 
                 <FormField
                   control={form.control}
-                  name="tresc"
+                  name="content"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex ">Treść</FormLabel>
@@ -170,7 +188,7 @@ const AdminNewCard = () => {
 
                 <FormField
                   control={form.control}
-                  name="kara"
+                  name="punishment"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Kara</FormLabel>
@@ -211,7 +229,7 @@ const AdminNewCard = () => {
         <CardBasic data={{ ...form }.watch()} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminNewCard;
+export default AdminNewCard

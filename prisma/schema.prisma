@@ -23,7 +23,7 @@ model Card {
   punishment Int
 
   Collection   Collection? @relation(fields: [collectionId], references: [id])
-  collectionId String?
+  collectionId String
 }
 
 model Edition {
