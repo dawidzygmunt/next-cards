@@ -26,7 +26,7 @@ const formSchema = z.object({
   }),
 })
 
-const CreateCollection = () => {
+const CreateCollection = ({ params }: { params: { editionId: string } }) => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,7 +38,11 @@ const CreateCollection = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const result = await addSingleCollection(values.name, values.price)
+    const result = await addSingleCollection(
+      values.name,
+      values.price,
+      params.editionId
+    )
     if ("error" in result) {
       toast.error(result.error)
       return

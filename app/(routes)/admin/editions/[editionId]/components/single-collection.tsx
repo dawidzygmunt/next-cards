@@ -29,7 +29,7 @@ const SingleCollection = ({ collection }: { collection: Collection }) => {
 
   return (
     <>
-      <div className="m-2">
+      <div>
         <ContextMenu>
           <ContextMenuTrigger>
             <div

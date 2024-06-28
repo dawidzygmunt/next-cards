@@ -1,10 +1,13 @@
 "use server"
 import prisma from "@/lib/prisma"
-import { revalidatePath } from "next/cache"
 
-export const getAllCollections = async () => {
+export const getAllCollections = async (editionId: string) => {
   try {
-    const result = await prisma.collection.findMany()
+    const result = await prisma.collection.findMany({
+      where: {
+        editionId,
+      },
+    })
     return result
   } catch (error: any) {
     if ("errors" in error && error.errors.length > 0)
