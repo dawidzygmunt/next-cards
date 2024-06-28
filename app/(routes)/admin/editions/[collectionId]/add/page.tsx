@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+
 import {
   Form,
   FormControl,
@@ -14,41 +15,40 @@ import {
 } from "@/components/ui/form"
 import { Card, CardContent } from "@/components/ui/card"
 import { toast } from "react-hot-toast"
-import { useRouter } from "next/navigation"
-import AddSingleEdition from "@/actions/editions/add-single-edition"
-import { revalidatePath } from "next/cache"
+import { addSingleCollection } from "@/actions/collections/add-single-collection"
 
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Wpisz nazwe",
   }),
+  price: z.coerce.number().min(1, {
+    message: "Wybierz cene",
+  }),
 })
 
-const CreateEdition = () => {
-  const router = useRouter()
-
+const CreateCollection = () => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      price: 4000,
     },
   })
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const result = await AddSingleEdition(values.name)
-    if (result && "error" in result) {
-      toast.error("Nie udało się dodać Edycji")
+    const result = await addSingleCollection(values.name, values.price)
+    if ("error" in result) {
+      toast.error(result.error)
       return
     }
-    router.push("/admin/editions")
-    toast.success("Dodano Edycję")
+    toast.success("Dodano kolekcję")
   }
 
   return (
     <div className="flex gap-4">
-      <div className="flex flex-col w-[40%] lg:w-[30%] ">
+      <div className="flex flex-col w-[40%] xl:px-20 xl:pr-40">
         <Card>
           <CardContent>
             <Form {...form}>
@@ -61,21 +61,32 @@ const CreateEdition = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex mt-4 mb-4">
-                        Nazwa Edycji
+                      <FormLabel className="flex mt-4">
+                        Nazwa kolekcji
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Prawda czy wyzwanie..."
-                          {...field}
-                        />
+                        <Input placeholder="Classic" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                <Button type="submit">Dodaj</Button>
+                <FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex">Cena</FormLabel>
+                      <FormControl>
+                        <Input {...field} className="w-[180px]" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit">Submit</Button>
               </form>
             </Form>
           </CardContent>
@@ -85,4 +96,4 @@ const CreateEdition = () => {
   )
 }
 
-export default CreateEdition
+export default CreateCollection

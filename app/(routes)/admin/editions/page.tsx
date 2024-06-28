@@ -7,11 +7,11 @@ const CardEditions = async () => {
   const editions = await getAllEditions()
 
   return (
-    <div className="flex m-10">
+    <div className="flex flex-1 gap-5 flex-wrap">
       <Link href={"/admin/editions/add"}>
         <div
           className="w-[200px] h-[200px] bg-slate-400 rounded-xl flex justify-center items-center
-        text-center hover:bg-slate-300 hover:cursor-pointer transition-all duration-300 mx-2"
+        text-center hover:bg-slate-300 hover:cursor-pointer transition-all duration-300"
         >
           <div className="text-center flex flex-col justify-center items-center">
             Dodaj nową Edycję

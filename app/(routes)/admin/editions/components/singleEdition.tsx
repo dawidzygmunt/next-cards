@@ -1,41 +1,41 @@
-"use client";
-import deleteSingleEdition from "@/actions/editions/delete-single-edition";
+"use client"
+import deleteSingleEdition from "@/actions/editions/delete-single-edition"
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { Edition } from "@prisma/client";
-import axios from "axios";
-import { Edit, Trash2 } from "lucide-react";
-import { revalidatePath } from "next/cache";
-import { useState } from "react";
-import toast from "react-hot-toast";
+} from "@/components/ui/context-menu"
+import { Edition } from "@prisma/client"
+import axios from "axios"
+import { Edit, Trash2 } from "lucide-react"
+import { revalidatePath } from "next/cache"
+import { useState } from "react"
+import toast from "react-hot-toast"
 
 const SingleEdition = ({ edition }: { edition: Edition }) => {
-  const [display, setDisplay] = useState(true);
+  const [display, setDisplay] = useState(true)
 
   const handleEdit = (e: React.MouseEvent) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
   const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const result = await deleteSingleEdition(edition.id);
+    const result = await deleteSingleEdition(edition.id)
     if ("error" in result) {
-      toast.error("Nie udało się usunąć Edycji");
-      return;
+      toast.error("Nie udało się usunąć Edycji")
+      return
     }
-    toast.success("Usunięto Edycję");
-    revalidatePath("/admin/editions");
-  };
+    toast.success("Usunięto Edycję")
+    revalidatePath("/admin/editions")
+  }
 
   return (
     <>
       {display && (
-        <div className="mx-2">
+        <div>
           <ContextMenu>
             <ContextMenuTrigger>
               <div
@@ -61,7 +61,7 @@ const SingleEdition = ({ edition }: { edition: Edition }) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default SingleEdition;
+export default SingleEdition
