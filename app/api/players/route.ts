@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { auth } from "@clerk/nextjs/server";
-import prismadb from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   try {
@@ -10,7 +10,7 @@ export async function GET(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const players = await prismadb.player.findMany({
+    const players = await prisma.player.findMany({
       where: {
         clerkId: userId,
       },
@@ -32,14 +32,14 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { playerName } = body;
 
-    let game = await prismadb.game.findFirst({
+    let game = await prisma.game.findFirst({
       where: {
         clerkId: userId,
       },
     });
 
     if (!game) {
-      game = await prismadb.game.create({
+      game = await prisma.game.create({
         data: {
           clerkId: userId,
           status: "in progess",
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const players = await prismadb.player.create({
+    const players = await prisma.player.create({
       data: {
         clerkId: userId,
         gameId: game.id,

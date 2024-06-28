@@ -13,10 +13,10 @@ function SideNavbar() {
         className="flex m-4 hover:cursor-pointer justify- items-center"
         onClick={() => router.push("/")}
       >
-        <h2 className="font-bold text-2xl">
+        {/* <h2 className="font-bold text-2xl">
           Karty
           <span className="text-red-500">Party</span>
-        </h2>
+        </h2> */}
       </div>
       <div className="flex flex-col bg-white mx-5 rounded-xl font-bold relative h-[88vh] shadow-2xl justify-between">
         <MainNav />

@@ -1,22 +1,19 @@
+"use client";
+import deleteSingleEdition from "@/actions/editions/delete-single-edition";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { Edition } from "@prisma/client";
 import axios from "axios";
 import { Edit, Trash2 } from "lucide-react";
+import { revalidatePath } from "next/cache";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-interface SingleEditionProps {
-  data: {
-    _id: string;
-    nazwa: string;
-  };
-}
-
-const SingleEdition: React.FC<SingleEditionProps> = ({ data }) => {
+const SingleEdition = ({ edition }: { edition: Edition }) => {
   const [display, setDisplay] = useState(true);
 
   const handleEdit = (e: React.MouseEvent) => {
@@ -25,13 +22,14 @@ const SingleEdition: React.FC<SingleEditionProps> = ({ data }) => {
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-    try {
-      await axios.delete(`/api/v1/editions/${data._id}`);
-      setDisplay(false);
-      toast.success("Usunięto Edycję");
-    } catch (error) {
+
+    const result = await deleteSingleEdition(edition.id);
+    if ("error" in result) {
       toast.error("Nie udało się usunąć Edycji");
+      return;
     }
+    toast.success("Usunięto Edycję");
+    revalidatePath("/admin/editions");
   };
 
   return (
@@ -45,7 +43,7 @@ const SingleEdition: React.FC<SingleEditionProps> = ({ data }) => {
               text-center hover:bg-red-300 hover:cursor-pointer transition-all duration-300 "
               >
                 <div className="text-center flex flex-col justify-center items-center">
-                  {data.nazwa}
+                  {edition.name}
                 </div>
               </div>
             </ContextMenuTrigger>
