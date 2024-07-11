@@ -1,16 +1,20 @@
-"use server"
+"use server";
 
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/prisma";
 
 const getAllCards = async () => {
   try {
-    const cards = await prisma.card.findMany()
-    return cards
+    const cards = await prisma.card.findMany({
+      include: {
+        Collection: true,
+      },
+    });
+    return cards;
   } catch (error: any) {
     if ("errors" in error && error.errors.length > 0)
-      return { error: error.errors[0].message }
-    return { error: "Something went wrong!" }
+      return { error: error.errors[0].message };
+    return { error: "Something went wrong!" };
   }
-}
+};
 
-export default getAllCards
+export default getAllCards;

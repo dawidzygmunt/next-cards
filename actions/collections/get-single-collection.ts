@@ -1,6 +1,6 @@
-"use server"
+"use server";
 
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/prisma";
 
 export const getSingleCollection = async (collectionId: string) => {
   try {
@@ -8,13 +8,13 @@ export const getSingleCollection = async (collectionId: string) => {
       where: {
         id: collectionId,
       },
-    })
-    return result
+    });
+    return result;
   } catch (error: any) {
     console.log(error);
-    
+
     if ("errors" in error && error.errors.length > 0)
-      return { error: error.errors[0].message }
-    return { error: "Something went wrong!" }
+      return { error: error.errors[0].message };
+    return { error: "Something went wrong!" };
   }
-}
+};

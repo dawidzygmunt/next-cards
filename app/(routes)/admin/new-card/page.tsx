@@ -53,7 +53,7 @@ const AdminNewCard = () => {
     resolver: zodResolver(newCardFormSchema),
     defaultValues: {
       type: "Prawda",
-      collectionName: data[0]?.name || "",
+      collectionId: data[0]?.id || "",
       amount: 1,
       punishment: 1,
     },
@@ -105,7 +105,7 @@ const AdminNewCard = () => {
 
                 <FormField
                   control={form.control}
-                  name="collectionName"
+                  name="collectionId"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex ">Wersja</FormLabel>
@@ -119,7 +119,7 @@ const AdminNewCard = () => {
                           {data.map((collection) => (
                             <SelectItem
                               key={collection.id}
-                              value={collection.name}
+                              value={collection.id}
                             >
                               {collection.name}
                             </SelectItem>
@@ -138,7 +138,7 @@ const AdminNewCard = () => {
                     <FormItem>
                       <FormLabel className="flex">Ilość powtórzeń</FormLabel>
                       <FormControl>
-                        <Input {...field} className="w-[180px]" />
+                        <Input {...field} type="number" className="w-[180px]" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
