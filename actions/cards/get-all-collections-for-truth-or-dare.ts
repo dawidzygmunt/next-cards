@@ -6,7 +6,7 @@ const getAllCollectionsForTruthOrDare = async () => {
   try {
     const edition = await prisma.edition.findFirst({
       where: {
-        name: "Truth or Dare",
+        name: "Prawda czy Wyzwanie",
       },
     })
     if (!edition) return { error: "Edition not found!" }

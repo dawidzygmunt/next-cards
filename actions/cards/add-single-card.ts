@@ -1,13 +1,10 @@
 "use server"
-import prisma from "@/lib/prisma"
 
-export const addSingleCard = async (values: {
-  type: string
-  collectionId: string
-  amount: number
-  content: string
-  punishment: number
-}) => {
+import * as z from "zod"
+import prisma from "@/lib/prisma"
+import { newCardFormSchema } from "@/schemas/new-card-form-schema"
+
+export const addSingleCard = async (values: z.infer<typeof newCardFormSchema>) => {
   try {
     const result = await prisma.card.create({
       data: {
@@ -15,7 +12,7 @@ export const addSingleCard = async (values: {
         amount: values.amount,
         content: values.content,
         punishment: values.punishment,
-        collectionId: values.collectionId,
+        collectionId: values.collectionName,
       },
     })
     return result

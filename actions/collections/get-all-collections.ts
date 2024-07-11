@@ -1,13 +1,9 @@
 "use server"
 import prisma from "@/lib/prisma"
 
-export const getAllCollections = async (editionId: string) => {
+export const getAllCollections = async () => {
   try {
-    const result = await prisma.collection.findMany({
-      where: {
-        editionId,
-      },
-    })
+    const result = await prisma.collection.findMany()
     return result
   } catch (error: any) {
     if ("errors" in error && error.errors.length > 0)
