@@ -8,7 +8,7 @@ function SideNavbar() {
   const router = useRouter();
 
   return (
-    <aside className="w-[220px] flex flex-col">
+    <aside className="w-[220px] flex flex-col ">
       <div
         className="flex m-4 hover:cursor-pointer justify- items-center"
         onClick={() => router.push("/")}
@@ -18,7 +18,7 @@ function SideNavbar() {
           <span className="text-red-500">Party</span>
         </h2> */}
       </div>
-      <div className="flex flex-col bg-white mx-5 rounded-xl font-bold relative h-[88vh] shadow-2xl justify-between">
+      <div className="flex flex-col bg-white mx-5 rounded-xl font-bold h-[88vh] shadow-2xl justify-between sticky top-0 left-0">
         <MainNav />
         <div className="m-4">
           <SignedOut>

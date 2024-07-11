@@ -13,6 +13,7 @@ import {
 import CardAllCards from "./card-all-cards";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import PaginationControls from "./pagination-controls";
 
 interface CardAllCardsProps {
   cards: ({
@@ -38,6 +39,7 @@ interface CardAllCardsProps {
 
 const AllCardsComponent = ({ cards }: CardAllCardsProps) => {
   const [search, setSearch] = useState("");
+
   return (
     <div className="flex flex-col">
       <div className="flex">
@@ -45,22 +47,6 @@ const AllCardsComponent = ({ cards }: CardAllCardsProps) => {
           placeholder="Search"
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="?asd">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
       </div>
 
       <div className="flex justify-center gap-8 flex-wrap rounded-lg p-5">

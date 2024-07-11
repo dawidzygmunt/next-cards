@@ -31,8 +31,9 @@ import CardBasic from "@/components/card-basic";
 import { useEffect, useState } from "react";
 import getAllCollectionsForTruthOrDare from "@/actions/cards/get-all-collections-for-truth-or-dare";
 import { Collection } from "@prisma/client";
-import { addSingleCard } from "@/actions/cards/add-single-card";
+
 import { newCardFormSchema } from "@/schemas/new-card-form-schema";
+import { createSingleCard } from "@/actions/cards/create-single-card";
 
 const AdminNewCard = () => {
   const [data, setData] = useState<Collection[]>([]);
@@ -61,7 +62,7 @@ const AdminNewCard = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof newCardFormSchema>) {
-    const result = await addSingleCard(values);
+    const result = await createSingleCard(values);
     if ("error" in result) {
       toast.error(result.error);
       return;

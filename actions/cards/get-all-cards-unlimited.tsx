@@ -2,17 +2,11 @@
 
 import prisma from "@/lib/prisma";
 
-const getAllCards = async (page: number = 1, limit: number = 10) => {
+const getAllCardsUnlimited = async () => {
   try {
-    const skip = (page - 1) * limit;
     const cards = await prisma.card.findMany({
-      skip: skip,
-      take: limit,
       include: {
         Collection: true,
-      },
-      orderBy: {
-        createdAt: "desc",
       },
     });
     return cards;
@@ -23,4 +17,4 @@ const getAllCards = async (page: number = 1, limit: number = 10) => {
   }
 };
 
-export default getAllCards;
+export default getAllCardsUnlimited;

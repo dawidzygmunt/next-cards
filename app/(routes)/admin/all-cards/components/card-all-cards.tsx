@@ -6,7 +6,6 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { revalidatePath } from "next/cache";
 import toast from "react-hot-toast";
 
 interface CardAllCardsProps {
