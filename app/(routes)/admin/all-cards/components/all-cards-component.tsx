@@ -1,19 +1,9 @@
 "use client";
 
 import { ContextMenu } from "@/components/ui/context-menu";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import CardAllCards from "./card-all-cards";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import PaginationControls from "./pagination-controls";
 
 interface CardAllCardsProps {
   cards: ({
@@ -49,7 +39,7 @@ const AllCardsComponent = ({ cards }: CardAllCardsProps) => {
         />
       </div>
 
-      <div className="flex justify-center gap-8 flex-wrap rounded-lg p-5">
+      <div className="flex flex-1 gap-8 flex-wrap rounded-lg p-6">
         {cards
           .filter((item) => {
             return search.toLowerCase() === ""

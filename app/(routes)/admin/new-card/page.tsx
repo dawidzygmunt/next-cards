@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -11,8 +11,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
 import {
   Select,
@@ -20,35 +20,35 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card"
 
-import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast"
 
-import { Textarea } from "@/components/ui/textarea";
-import CardBasic from "@/components/card-basic";
-import { useEffect, useState } from "react";
-import getAllCollectionsForTruthOrDare from "@/actions/cards/get-all-collections-for-truth-or-dare";
-import { Collection } from "@prisma/client";
+import { Textarea } from "@/components/ui/textarea"
+import CardBasic from "@/components/card-basic"
+import { useEffect, useState } from "react"
+import getAllCollectionsForTruthOrDare from "@/actions/cards/get-all-collections-for-truth-or-dare"
+import { Collection } from "@prisma/client"
 
-import { newCardFormSchema } from "@/schemas/new-card-form-schema";
-import { createSingleCard } from "@/actions/cards/create-single-card";
+import { newCardFormSchema } from "@/schemas/new-card-form-schema"
+import { createSingleCard } from "@/actions/cards/create-single-card"
 
 const AdminNewCard = () => {
-  const [data, setData] = useState<Collection[]>([]);
+  const [data, setData] = useState<Collection[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getAllCollectionsForTruthOrDare();
+      const result = await getAllCollectionsForTruthOrDare()
       if ("error" in result) {
-        toast.error(result.error);
-        return;
+        toast.error(result.error)
+        return
       }
-      setData(result);
-    };
-    fetchData();
-  }, []);
+      setData(result)
+    }
+    fetchData()
+  }, [])
   // 1. Define your form.
   const form = useForm<z.infer<typeof newCardFormSchema>>({
     resolver: zodResolver(newCardFormSchema),
@@ -58,16 +58,16 @@ const AdminNewCard = () => {
       amount: 1,
       punishment: 1,
     },
-  });
+  })
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof newCardFormSchema>) {
-    const result = await createSingleCard(values);
+    const result = await createSingleCard(values)
     if ("error" in result) {
-      toast.error(result.error);
-      return;
+      toast.error(result.error)
+      return
     }
-    toast.success("Dodano kartę");
+    toast.success("Dodano kartę")
   }
 
   return (
@@ -207,7 +207,7 @@ const AdminNewCard = () => {
         <CardBasic data={{ ...form }.watch()} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminNewCard;
+export default AdminNewCard

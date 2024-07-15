@@ -1,8 +1,9 @@
-"use server";
+"use server"
 
-import * as z from "zod";
-import prisma from "@/lib/prisma";
-import { newCardFormSchema } from "@/schemas/new-card-form-schema";
+import * as z from "zod"
+import prisma from "@/lib/prisma"
+import { newCardFormSchema } from "@/schemas/new-card-form-schema"
+import { revalidatePath } from "next/cache"
 
 export const createSingleCard = async (
   values: z.infer<typeof newCardFormSchema>
@@ -16,13 +17,14 @@ export const createSingleCard = async (
         punishment: values.punishment,
         collectionId: values.collectionId,
       },
-    });
-    return result;
+    })
+    revalidatePath("/admin/all-cards")
+    return result
   } catch (error: any) {
-    console.log(error);
+    console.log(error)
 
     if ("errors" in error && error.errors.length > 0)
-      return { error: error.errors[0].message };
-    return { error: "Something went wrong!" };
+      return { error: error.errors[0].message }
+    return { error: "Something went wrong!" }
   }
-};
+}

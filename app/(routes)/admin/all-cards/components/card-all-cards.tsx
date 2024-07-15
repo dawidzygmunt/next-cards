@@ -6,6 +6,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import Link from "next/link";
 import toast from "react-hot-toast";
 
 interface CardAllCardsProps {
@@ -46,7 +47,7 @@ const CardAllCards = ({ data }: CardAllCardsProps) => {
     <>
       <ContextMenuTrigger>
         <div className="flex">
-          <div className="card shadow-xl w-[200px] h-[250px] rounded-lg relative border-black border-[1px]">
+          <div className="card shadow-xl w-[200px] h-[250px] rounded-lg relative border-black border-[1px] hover:border-gray-400 hover:-translate-y-1 hover:shadow-xl transition-all">
             <div
               className="absolute flex top-0 left-0 bg-red-500 w-[20px] h-[20px] justify-center items-center 
           text-center text-xs text-white rounded-full -translate-x-1 -translate-y-1"
@@ -72,7 +73,9 @@ const CardAllCards = ({ data }: CardAllCardsProps) => {
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem>Edit</ContextMenuItem>
+        <Link href={`/admin/all-cards/${data.id}`}>
+          <ContextMenuItem>Edit</ContextMenuItem>
+        </Link>
         <ContextMenuItem onClick={handleDelete}>Delete</ContextMenuItem>
       </ContextMenuContent>
     </>
