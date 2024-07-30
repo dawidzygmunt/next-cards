@@ -22,8 +22,9 @@ model Card {
   amount     Int
   punishment Int
 
-  Collection   Collection? @relation(fields: [collectionId], references: [id])
+  Collection   Collection?    @relation(fields: [collectionId], references: [id])
   collectionId String
+  AssignedCard AssignedCard[]
 }
 
 model Edition {
@@ -57,6 +58,7 @@ model User {
   userCollections UserCollection[]
   players         Player[]
   game            Game?
+  AssignedCard    AssignedCard[]
 }
 
 model Player {
@@ -84,24 +86,25 @@ model UserCollection {
 model Game {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  status    String
+  status    String   @default("pending")
 
-  clerkId String?  @unique
+  clerkId String   @unique
   user    User?    @relation(fields: [clerkId], references: [clerkId])
   Players Player[]
+
+  AssignedCard AssignedCard[]
 }
 
-// model AssignedCard {
-//   id               String   @id @default(cuid())
-//   createdAt        DateTime @default(now())
-//   updatedAt        DateTime @updatedAt
-//   remainingRepeats Int
-//   gameId           String
-//   cardId           String
-//   userId           String
-//   status           String
+model AssignedCard {
+  id               String   @id @default(cuid())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  remainingRepeats Int
+  gameId           String
+  cardId           String
+  userId           String
 
-//   game Game @relation(fields: [gameId], references: [id])
-//   card Card @relation(fields: [cardId], references: [id])
-//   user User @relation(fields: [userId], references: [id])
-// }
+  game Game @relation(fields: [gameId], references: [id])
+  card Card @relation(fields: [cardId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+}

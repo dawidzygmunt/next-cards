@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import axios from "axios";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import axios from "axios"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -12,13 +12,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import UseGetPlayers from "@/hooks/use-get-players";
-import UsePostPlayer from "@/hooks/use-post-players";
-import SinglePlayer from "./components/single-player";
-import { useRouter } from "next/navigation";
-import { Player } from "@prisma/client";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import UseGetPlayers from "@/hooks/use-get-players"
+import UsePostPlayer from "@/hooks/use-post-players"
+import SinglePlayer from "./components/single-player"
+import { useRouter } from "next/navigation"
+import { Player } from "@prisma/client"
+import { useEffect } from "react"
 
 const formSchema = z.object({
   playerName: z
@@ -29,25 +30,16 @@ const formSchema = z.object({
     .max(12, {
       message: "Maksymalna długość to 12 znaków",
     }),
-});
+})
 
 const NewGame = () => {
-  const router = useRouter();
-  const { data: players } = UseGetPlayers();
-  const mutation = UsePostPlayer();
-
-  const newGame = async () => {
-    try {
-      const response = await axios.get("/api/v1/cloneData");
-      console.log(response.data.message);
-    } catch (error) {
-      console.log("blad" + error);
-    }
-  };
+  const router = useRouter()
+  const { data: players } = UseGetPlayers()
+  const mutation = UsePostPlayer()
 
   const goMainButtonHandle: React.MouseEventHandler = () => {
-    router.push("/game");
-  };
+    router.push("/game")
+  }
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,16 +47,16 @@ const NewGame = () => {
     defaultValues: {
       playerName: "",
     },
-  });
+  })
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    mutation.mutate(values);
+    mutation.mutate(values)
   }
 
   return (
     <div className="flex flex-col w-full min-h-screen items-center mt-20">
-      <div className="bg-white shadow-xl px-10 py-4 pb-6 rounded-md">
+      <div className="bg-white shadow-xl border border-black px-10 py-4 pb-6 rounded-md">
         <h3>Nazwa Gracza</h3>
         <Form {...form}>
           <form
@@ -89,7 +81,7 @@ const NewGame = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="ml-3 mt-[7px]">
+              <Button type="submit" className="ml-3 mt-[7px] bg-[#0e34a0]">
                 Dodaj
               </Button>
             </div>
@@ -117,7 +109,7 @@ const NewGame = () => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NewGame;
+export default NewGame

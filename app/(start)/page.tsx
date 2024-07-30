@@ -1,10 +1,32 @@
-"use client";
-
-import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+"use client"
+import continueGame from "@/actions/game/contoinue-game"
+import createNewGame from "@/actions/game/new-game"
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation"
+import { Button } from "@/components/ui/button"
+import prisma from "@/lib/prisma"
+import { auth } from "@clerk/nextjs/server"
+import { error } from "console"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 const MainMenu = () => {
+  const router = useRouter()
+
+  const newGame = () => {
+    createNewGame()
+    router.push("/game")
+  }
+
+  const handleContinue = async () => {
+    const result = await continueGame()
+    if ("error" in result) {
+      toast.error(result.error)
+      return
+    }
+    router.push("/game")
+  }
+
   return (
     <>
       <BackgroundGradientAnimation />
@@ -12,26 +34,36 @@ const MainMenu = () => {
         <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20 mb-20">
           Prawda chodzi boso
         </p>
-        <div className="flex flex-col text-2xl gap-2">
-          <Link href="/newGame">
-            <Button className="w-[300px] py-6">Nowa gra</Button>
-          </Link>
+        <div className="flex flex-col text-2xl gap-2 p-24 py-36">
+          <Button
+            className="w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300"
+            onClick={newGame}
+          >
+            Nowa gra
+          </Button>
 
-          <Link href="/game">
-            <Button className="w-[300px] py-6">Kontynuj</Button>
-          </Link>
+          <Button
+            className="w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300"
+            onClick={handleContinue}
+          >
+            Kontynuj
+          </Button>
 
           <Link href="/admin/dashboard">
-            <Button className="w-[300px] py-6">Ustawienia</Button>
+            <Button className="w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300">
+              Ustawienia
+            </Button>
           </Link>
 
           <Link href="/credits">
-            <Button className="w-[300px] py-6 ">Credits</Button>
+            <Button className="w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300">
+              Credits
+            </Button>
           </Link>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default MainMenu;
+export default MainMenu

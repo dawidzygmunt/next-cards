@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React from "react"
 
 const NotFound = () => {
   return (
@@ -12,8 +13,8 @@ const NotFound = () => {
             Something&apos;s missing.
           </p>
           <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
-            Sorry, we can&apos;t find that page. You&apos;ll find lots to explore on the
-            home page.{" "}
+            Sorry, we can&apos;t find that page. You&apos;ll find lots to
+            explore on the home page.{" "}
           </p>
           <a
             href="#"
@@ -24,7 +25,7 @@ const NotFound = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound
