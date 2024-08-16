@@ -9,6 +9,9 @@ export const getSingleCollection = async (collectionId: string) => {
         id: collectionId,
       },
     });
+    if (!result) {
+      return { "error": "Not Found"}
+    }
     return result;
   } catch (error: any) {
     console.log(error);

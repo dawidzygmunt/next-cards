@@ -3,10 +3,21 @@ import CardBasic from "@/components/card-basic"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import CurrentPlayer from "./components/current-player"
+import { Card } from "@prisma/client"
 
-const data = { typ: "0", wersja: "1", ilosc: 2, tresc: "asd", kara: "3" }
+const dataTest: Card = {
+  id: "1",
+  type: "Pierwsza karta",
+  collectionId: "Test",
+  amount: 1,
+  content: "Test",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  punishment: 3,
+}
 const Game = () => {
   const [playerIndex, setPlayerIndex] = useState(0)
+  const [data, setData] = useState(dataTest)
 
   const [animation, setAnimation] = useState("")
 

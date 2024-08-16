@@ -1,7 +1,8 @@
-import Card from "@/components/gameMain/card"
 import { useEffect, useState } from "react"
-import { Card as CardType } from "types"
+
 import axios from "axios"
+import { Card as CardType } from "@prisma/client"
+import CardBasic from "@/components/card-basic"
 
 const RenderPdf = () => {
   const [cards, setCards] = useState([])
@@ -29,8 +30,8 @@ const RenderPdf = () => {
   return (
     <div className="flex justify-center gap-10 flex-wrap rounded-lg p-5">
       {cards?.map((card: CardType) => (
-        <div key={card._id}>
-          <Card data={card} key={card._id} />
+        <div key={card.id}>
+          <CardBasic data={card} key={card.id} />
         </div>
       ))}
     </div>
