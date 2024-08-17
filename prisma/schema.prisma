@@ -56,7 +56,6 @@ model User {
   updatedAt DateTime @updatedAt
 
   userCollections UserCollection[]
-  players         Player[]
   game            Game?
   AssignedCard    AssignedCard[]
 }
@@ -65,11 +64,9 @@ model Player {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  clerkId   String
   gameId    String
   name      String
 
-  user User @relation(fields: [clerkId], references: [clerkId])
   game Game @relation(fields: [gameId], references: [id])
 }
 

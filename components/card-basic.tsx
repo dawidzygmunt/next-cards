@@ -1,32 +1,33 @@
-"use client";
+"use client"
 
-import { getSingleCollection } from "@/actions/collections/get-single-collection";
-import { Collection } from "@prisma/client";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { getSingleCollection } from "@/actions/collections/get-single-collection"
+import { Collection } from "@prisma/client"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 interface Card {
-  type: string;
-  content: string;
-  amount: number;
-  punishment: number;
-  collectionId: string;
+  type: string
+  content: string
+  amount: number
+  punishment: number
+  collectionId: string
 }
 
 const CardBasic = ({ data }: { data: Card }) => {
-  const [collection, setCollection] = useState<Collection | null>(null);
+  const [collection, setCollection] = useState<Collection | null>(null)
+
   useEffect(() => {
-    if (!data.collectionId) return;
+    if (!data.collectionId) return
     const fetchData = async () => {
-      const result = await getSingleCollection(data.collectionId);
+      const result = await getSingleCollection(data.collectionId)
       if ((result && "error" in result) || !result) {
-        toast.error("Something went wrong. Please try again.");
-        return;
+        toast.error("Something went wrong. Please try again.")
+        return
       }
-      setCollection(result);
-    };
-    fetchData();
-  }, [data]);
+      setCollection(result)
+    }
+    fetchData()
+  }, [data])
   return (
     <div className="flex">
       <div className="card shadow-xl w-[250px] h-[350px] rounded-lg relative border-black border-[1px]">
@@ -51,7 +52,7 @@ const CardBasic = ({ data }: { data: Card }) => {
         <div className="absolute right-1 bottom-1">{data.punishment}</div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CardBasic;
+export default CardBasic

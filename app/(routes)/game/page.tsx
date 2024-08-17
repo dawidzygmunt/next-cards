@@ -15,6 +15,7 @@ const dataTest: Card = {
   updatedAt: new Date(),
   punishment: 3,
 }
+
 const Game = () => {
   const [playerIndex, setPlayerIndex] = useState(0)
   const [data, setData] = useState(dataTest)

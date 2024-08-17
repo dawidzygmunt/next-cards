@@ -6,7 +6,7 @@ const continueGame = async () => {
   try {
     const { userId } = auth()
     if (!userId) {
-      throw new Error("User not found")
+      return { error: "You are not authenticated" }
     }
     const result = await prisma.game.findFirst({
       where: {

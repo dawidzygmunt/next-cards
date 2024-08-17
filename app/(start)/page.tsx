@@ -1,5 +1,6 @@
 "use client"
-import continueGame from "@/actions/game/contoinue-game"
+
+import continueGame from "@/actions/game/continue-game"
 import createNewGame from "@/actions/game/new-game"
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation"
 import { Button } from "@/components/ui/button"
@@ -13,9 +14,9 @@ import toast from "react-hot-toast"
 const MainMenu = () => {
   const router = useRouter()
 
-  const newGame = () => {
-    createNewGame()
-    router.push("/game")
+  const newGame = async () => {
+    await createNewGame()
+    router.push("/newGame")
   }
 
   const handleContinue = async () => {
