@@ -15,7 +15,6 @@ const MainMenu = () => {
   const router = useRouter()
 
   const newGame = async () => {
-    await createNewGame()
     router.push("/newGame")
   }
 

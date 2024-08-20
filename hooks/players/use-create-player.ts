@@ -1,7 +1,6 @@
 import { Player } from "@prisma/client"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
-import { CuboidIcon } from "lucide-react"
 
 interface NewPlayer {
   playerName: string
@@ -36,9 +35,9 @@ const useCreatePlayer = () => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    // onSettled: () => {
-    //   queryClient.invalidateQueries({ queryKey: ["players"] })
-    // },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["players"] })
+    },
   })
 }
 

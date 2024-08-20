@@ -5,18 +5,18 @@ import useDeletePlayer from "@/hooks/players/use-delete-player"
 
 interface SinglePlayerProps {
   playerName: string
-  playerID: string
+  playerId: string
 }
 
 const SinglePlayer: React.FC<SinglePlayerProps> = ({
   playerName,
-  playerID,
+  playerId,
 }) => {
   const deleteMutation = useDeletePlayer()
 
   // delete player
   const handleDeleteButton = async () => {
-    deleteMutation.mutate(playerID)
+    deleteMutation.mutate(playerId)
   }
 
   return (

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server"
-
 import { auth } from "@clerk/nextjs/server"
 import prisma from "@/lib/prisma"
-import { error } from "console"
 
 export async function GET(req: Request) {
   try {
@@ -17,7 +15,7 @@ export async function GET(req: Request) {
       },
     })
     if (!game) {
-      return { error: "No game found" }
+      return new NextResponse("No game found", { status: 404 })
     }
 
     const players = await prisma.player.findMany({

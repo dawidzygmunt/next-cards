@@ -46,6 +46,7 @@ model Collection {
   Cards           Card[]
   userCollections UserCollection[]
   Edition         Edition          @relation(fields: [editionId], references: [id])
+  Game            Game[]
 }
 
 model User {
@@ -81,9 +82,12 @@ model UserCollection {
 }
 
 model Game {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  status    String   @default("pending")
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  status       String   @default("pending")
+  collectionId String
+
+  Collection Collection @relation(fields: [collectionId], references: [id])
 
   clerkId String   @unique
   user    User?    @relation(fields: [clerkId], references: [clerkId])
