@@ -52,9 +52,8 @@ const NewGame = ({
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-
     createPlayerMutation.mutate(values)
+    form.reset()
   }
 
   return (

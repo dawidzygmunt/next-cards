@@ -21,6 +21,7 @@ model Card {
   updatedAt  DateTime @updatedAt
   amount     Int
   punishment Int
+  wheel      Boolean  @default(false)
 
   Collection   Collection?    @relation(fields: [collectionId], references: [id])
   collectionId String
@@ -58,23 +59,22 @@ model User {
 
   userCollections UserCollection[]
   game            Game?
-  AssignedCard    AssignedCard[]
 }
 
 model Player {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  gameId    String
-  name      String
-
-  game Game @relation(fields: [gameId], references: [id])
+  id            String         @id @default(cuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  gameId        String
+  name          String
+  questionValue Int            @default(0)
+  game          Game           @relation(fields: [gameId], references: [id])
+  AssignedCard  AssignedCard[]
 }
 
 model UserCollection {
-  clerkId String
-  user    User   @relation(fields: [clerkId], references: [clerkId])
-
+  clerkId      String
+  user         User       @relation(fields: [clerkId], references: [clerkId])
   collectionId String
   collection   Collection @relation(fields: [collectionId], references: [id])
 
@@ -97,15 +97,14 @@ model Game {
 }
 
 model AssignedCard {
-  id               String   @id @default(cuid())
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  remainingRepeats Int
-  gameId           String
-  cardId           String
-  userId           String
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  gameId    String
+  cardId    String
+  playerId  String
 
-  game Game @relation(fields: [gameId], references: [id])
-  card Card @relation(fields: [cardId], references: [id])
-  user User @relation(fields: [userId], references: [id])
+  game   Game   @relation(fields: [gameId], references: [id])
+  card   Card   @relation(fields: [cardId], references: [id])
+  player Player @relation(fields: [playerId], references: [id])
 }

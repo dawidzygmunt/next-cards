@@ -21,7 +21,7 @@ const CardBasic = ({ data }: { data: Card }) => {
     const fetchData = async () => {
       const result = await getSingleCollection(data.collectionId)
       if ((result && "error" in result) || !result) {
-        toast.error("Something went wrong. Please try again.")
+        // toast.error("Something went wrong. Please try again.")
         return
       }
       setCollection(result)

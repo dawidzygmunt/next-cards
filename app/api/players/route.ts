@@ -22,6 +22,9 @@ export async function GET(req: Request) {
       where: {
         gameId: game.id,
       },
+      orderBy: {
+        createdAt: "asc",
+      },
     })
     return NextResponse.json(players)
   } catch (error) {
@@ -40,19 +43,14 @@ export async function POST(req: Request) {
     const body = await req.json()
     const { playerName } = body
 
-    let game = await prisma.game.findFirst({
+    const game = await prisma.game.findFirst({
       where: {
         clerkId: userId,
       },
     })
 
     if (!game) {
-      game = await prisma.game.create({
-        data: {
-          clerkId: userId,
-          status: "in progess",
-        },
-      })
+      return new NextResponse("No game found", { status: 404 })
     }
 
     const players = await prisma.player.create({
