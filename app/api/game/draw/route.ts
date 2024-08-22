@@ -53,6 +53,29 @@ export async function GET(req: Request) {
       },
     })
 
+    const allCards = await prisma.card.findMany({
+      where: {
+        collectionId: game.collectionId,
+        id: {
+          notIn: assignedCards.map((card) => card.cardId),
+        },
+      },
+    })
+
+    if (allCards.length <= 0) {
+      const response = {
+        id: "1",
+        type: `Gratulacje! \n Koniec kart `,
+        collectionId: "test",
+        amount: 1,
+        content: "To już jest koniec - Jesteśmy wolni! \n Możemy już iść",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        punishment: 0,
+      }
+      return new Response(JSON.stringify(response), { status: 203 })
+    }
+
     const remainingCards = await prisma.card.findMany({
       where: {
         type: type,
@@ -67,9 +90,33 @@ export async function GET(req: Request) {
     })
 
     if (remainingCards.length <= 0) {
-      return new NextResponse(`You ran out of cards of type ${type}`, {
-        status: 400,
-      })
+      let response
+      if (type === "Prawda") {
+        response = {
+          id: "1",
+          type: `Koniec kart Prawdy`,
+          collectionId: "test",
+          amount: 1,
+          content:
+            "wykorzystałeś wszystkie karty tego typu. Teraz Czas na Wyzawania",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          punishment: 0,
+        }
+      } else {
+        response = {
+          id: "1",
+          type: `Koniec kart Wyzwania`,
+          collectionId: "test",
+          amount: 1,
+          content:
+            "wykorzystałeś wszystkie karty tego typu. Teraz czas na Prawdę",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          punishment: 1,
+        }
+      }
+      return new Response(JSON.stringify(response), { status: 200 })
     }
 
     const card = await prisma.card.findFirst({

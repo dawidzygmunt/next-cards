@@ -11,7 +11,7 @@ export const useDrawCard = () => {
       type: string
       playerId: string
     }) => {
-      const { data } = await axios.get(
+      const data = await axios.get(
         `/api/game/draw?type=${type}&playerId=${playerId}`
       )
       return data

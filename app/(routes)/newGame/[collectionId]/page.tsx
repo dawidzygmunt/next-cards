@@ -38,7 +38,7 @@ const NewGame = ({
   const { data: players } = useGetPlayers()
   const createPlayerMutation = useCreatePlayer()
 
-  const goMainButtonHandle: React.MouseEventHandler = async () => {
+  const goMainButtonHandle: React.MouseEventHandler = () => {
     router.push("/game")
   }
 

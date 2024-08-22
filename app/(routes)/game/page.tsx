@@ -35,20 +35,26 @@ const Game = () => {
       toast.error("Nie znaleziono graczy")
       return
     }
-    setAnimation("animate-scrollUp")
+
+    const currentPlayer = players[playerIndex]
+
+    const { data, status } = await mutationFn.mutateAsync({
+      type: "Prawda",
+      playerId: currentPlayer.id,
+    })
+    setData(data)
+
+    // Stop changing player if there are no cards left
+    if (status === 203) {
+      return
+    }
+
+    // Change player after animation
     setTimeout(async () => {
       setPlayerIndex((prevIndex) => (prevIndex + 1) % totalPlayers)
       setAnimation("")
     }, 200)
-
-    const currentPlayer = players[playerIndex]
-
-    const data = await mutationFn.mutateAsync({
-      type: "Prawda",
-      playerId: currentPlayer.id,
-    })
     console.log(data)
-    setData(data)
   }
 
   const handlePrev = async () => {
@@ -56,22 +62,28 @@ const Game = () => {
       toast.error("Nie znaleziono graczy")
       return
     }
-    setAnimation("animate-scrollDown")
+
+    const currentPlayer = players[playerIndex]
+
+    const { data, status } = await mutationFn.mutateAsync({
+      type: "Wyzwanie",
+      playerId: currentPlayer.id,
+    })
+
+    setData(data)
+
+    // Stop changing player if there are no cards left
+    if (status === 203) {
+      return
+    }
+
     setTimeout(() => {
       setPlayerIndex(
         (prevIndex) => (prevIndex - 1 + totalPlayers) % totalPlayers
       )
       setAnimation("")
     }, 200)
-
-    const currentPlayer = players[playerIndex]
-
-    const data = await mutationFn.mutateAsync({
-      type: "Wyzwanie",
-      playerId: currentPlayer.id,
-    })
     console.log(data)
-    setData(data)
   }
 
   return (
