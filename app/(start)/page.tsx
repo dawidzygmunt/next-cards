@@ -1,12 +1,8 @@
 "use client"
 
 import continueGame from "@/actions/game/continue-game"
-import createNewGame from "@/actions/game/new-game"
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation"
 import { Button } from "@/components/ui/button"
-import prisma from "@/lib/prisma"
-import { auth } from "@clerk/nextjs/server"
-import { error } from "console"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"

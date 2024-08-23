@@ -27,6 +27,7 @@ const useCreatePlayer = () => {
           createdAt: new Date(),
           updatedAt: new Date(),
           gameId: Math.random().toString(),
+          questionValue: 0,
         },
       ])
 

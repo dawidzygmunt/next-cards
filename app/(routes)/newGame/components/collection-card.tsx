@@ -6,7 +6,7 @@ import { VeganIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import React from "react"
 
-const CollectionCard = async ({
+const CollectionCard = ({
   name,
   collectionId,
 }: {

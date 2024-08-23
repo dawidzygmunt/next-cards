@@ -19,6 +19,7 @@ const dataTest: Card = {
   createdAt: new Date(),
   updatedAt: new Date(),
   punishment: 3,
+  wheel: false,
 }
 
 const Game = () => {
