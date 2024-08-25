@@ -21,7 +21,6 @@ model Card {
   updatedAt  DateTime @updatedAt
   amount     Int
   punishment Int
-  wheel      Boolean? @default(false)
 
   Collection   Collection?    @relation(fields: [collectionId], references: [id])
   collectionId String
