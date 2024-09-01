@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from "zod"
 
 export const newCardFormSchema = z.object({
   type: z.string().min(2, {
@@ -16,8 +16,8 @@ export const newCardFormSchema = z.object({
     .min(5, {
       message: "Wpisz treść karty (min 5 znaków)",
     })
-    .max(80, { message: "Maksymalna ilość znaków to 80" }),
+    .max(160, { message: "Maksymalna ilość znaków to 160" }),
   punishment: z.coerce.number().min(1, {
     message: "Wybierz karę",
   }),
-});
+})

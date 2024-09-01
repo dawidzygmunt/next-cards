@@ -1,3 +1,4 @@
+import axiosClient from "@/lib/api-client"
 import { Player } from "@prisma/client"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
@@ -10,7 +11,7 @@ const useCreatePlayer = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (player: NewPlayer) => {
-      return await axios.post("/api/players", player)
+      return await axiosClient.post("/api/players", player)
     },
     onMutate: async (newPlayer) => {
       await queryClient.cancelQueries({ queryKey: ["players"] })

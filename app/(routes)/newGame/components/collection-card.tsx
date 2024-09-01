@@ -1,5 +1,6 @@
 "use client"
 
+import axiosClient from "@/lib/api-client"
 import axios from "axios"
 import { VeganIcon } from "lucide-react"
 
@@ -16,7 +17,7 @@ const CollectionCard = ({
   const router = useRouter()
 
   const handleClick = async () => {
-    await axios.post("/api/game", {
+    await axiosClient.post("/api/game", {
       collectionId,
     })
     router.push(`/newGame/${collectionId}`)

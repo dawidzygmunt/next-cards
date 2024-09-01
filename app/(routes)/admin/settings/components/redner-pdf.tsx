@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { Card as CardType } from "@prisma/client"
 import CardBasic from "@/components/card-basic"
+import axiosClient from "@/lib/api-client"
 
 const RenderPdf = () => {
   const [cards, setCards] = useState([])
@@ -11,7 +12,7 @@ const RenderPdf = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/v1/cards?page=1")
+        const response = await axiosClient.get("/api/v1/cards?page=1")
         setCards(response.data.cards)
         setLoading(false) // Ustawiamy loading na false po pomyślnym pobraniu danych
       } catch (error) {
