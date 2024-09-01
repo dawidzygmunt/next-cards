@@ -7,9 +7,6 @@ const createAxiosInstance = (baseURL: string) => {
   })
 }
 
-const axiosClient = createAxiosInstance(
-  `http://localhost:3000/${process.env.NEXT_PUBLIC_BASE_PATH}` ||
-    "http://localhost:3000"
-)
+const axiosClient = createAxiosInstance(process.env.NEXT_PUBLIC_BASE_PATH || "")
 
 export default axiosClient
