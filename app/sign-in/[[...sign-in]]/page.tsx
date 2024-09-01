@@ -1,5 +1,5 @@
 import { SignIn } from "@clerk/nextjs"
-import { AlertOctagon, MoveDownRight } from "lucide-react"
+import { MoveDownRight } from "lucide-react"
 
 export default function Page() {
   return (
