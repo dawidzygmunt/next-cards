@@ -14,7 +14,7 @@ export default function Page() {
           Password: <b>123</b>
         </span>
       </div>
-      <SignIn path="/cards/sign-in" />
+      <SignIn path="/cards/sign-in" forceRedirectUrl="/" />
     </div>
   )
 }
