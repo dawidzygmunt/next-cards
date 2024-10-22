@@ -11,62 +11,110 @@ import {
 import AnalysticTile from "./components/analysticComponent"
 import prisma from "@/lib/prisma"
 
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { date } from "zod"
+import getAllCards from "@/actions/cards/get-all-cards"
+
 const AdminPanel = async () => {
   const { allCards, truthCards, dareCards } = await countAllCards()
   const { editions, collections } = await countEditionsAndCollections()
 
+  const cards = await getAllCards()
+
+  if ("error" in cards) {
+    console.log("Uknown error")
+    return
+  }
+
   const games = await prisma.game.count({})
 
+  const today = new Date().toDateString()
+
   return (
-    <div className="flex">
-      <div className="grid grid-cols-2 gap-6">
-        <AnalysticTile
-          title="Pytania"
-          amount={truthCards as number}
-          className="bg-purple-500"
-        >
-          <Check />
-        </AnalysticTile>
+    <div className="flex gap-16 w-full">
+      <div className="flex w-full">
+        <div className="grid grid-cols-2 gap-6">
+          <AnalysticTile
+            title="Pytania"
+            amount={truthCards as number}
+            className="bg-purple-500"
+          >
+            <Check />
+          </AnalysticTile>
 
-        <AnalysticTile
-          title="Wyzwania"
-          amount={dareCards as number}
-          className="bg-red-500"
-        >
-          <Spade />
-        </AnalysticTile>
+          <AnalysticTile
+            title="Wyzwania"
+            amount={dareCards as number}
+            className="bg-red-500"
+          >
+            <Spade />
+          </AnalysticTile>
 
-        <AnalysticTile
-          title="Kolekcje"
-          amount={collections as number}
-          className="bg-green-500"
-        >
-          <Diamond />
-        </AnalysticTile>
+          <AnalysticTile
+            title="Kolekcje"
+            amount={collections as number}
+            className="bg-green-500"
+          >
+            <Diamond />
+          </AnalysticTile>
 
-        <AnalysticTile
-          title="Ilość edycji"
-          amount={editions as number}
-          className="bg-yellow-400"
-        >
-          <ReceiptText />
-        </AnalysticTile>
+          <AnalysticTile
+            title="Ilość edycji"
+            amount={editions as number}
+            className="bg-yellow-400"
+          >
+            <ReceiptText />
+          </AnalysticTile>
 
-        <AnalysticTile
-          title="Wszystkich kart"
-          amount={allCards as number}
-          className="bg-blue-500"
-        >
-          <TrendingUp />
-        </AnalysticTile>
+          <AnalysticTile
+            title="Wszystkich kart"
+            amount={allCards as number}
+            className="bg-blue-500"
+          >
+            <TrendingUp />
+          </AnalysticTile>
 
-        <AnalysticTile
-          title="Aktualnie rozpoczętych gier"
-          amount={games as number}
-          className="bg-[#b629b6]"
-        >
-          <User />
-        </AnalysticTile>
+          <AnalysticTile
+            title="Aktualnie rozpoczętych gier"
+            amount={games as number}
+            className="bg-[#b629b6]"
+          >
+            <User />
+          </AnalysticTile>
+        </div>
+      </div>
+      <div className="flex w-full">
+        <Table>
+          <TableCaption>Lista ostatnio dodanych kart</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Data</TableHead>
+              <TableHead>Gra</TableHead>
+              <TableHead>Treść</TableHead>
+              <TableHead className="text-right">Wersja</TableHead>
+            </TableRow>
+          </TableHeader>
+          {cards.map((card) => (
+            <TableBody key={card.id}>
+              <TableRow>
+                <TableCell className="font-medium">{today}</TableCell>
+                <TableCell>{card.Collection?.Edition.name}</TableCell>
+                <TableCell>{card.content}</TableCell>
+                <TableCell className="text-right">
+                  {card.Collection?.name}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ))}
+        </Table>
       </div>
     </div>
   )

@@ -9,7 +9,11 @@ const getAllCards = async (page: number = 1, limit: number = 10) => {
       skip: skip,
       take: limit,
       include: {
-        Collection: true,
+        Collection: {
+          include: {
+            Edition: true,
+          },
+        },
       },
       orderBy: {
         updatedAt: "desc",
