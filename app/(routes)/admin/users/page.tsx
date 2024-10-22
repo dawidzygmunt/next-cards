@@ -1,12 +1,19 @@
-"use cleint";
-const Users = () => {
+import prisma from "@/lib/prisma"
+import SingleUser from "./components/single-user"
+import { User as PrismaUser } from "@prisma/client"
+
+const Users = async () => {
+  const users: PrismaUser[] = await prisma.user.findMany()
+
   return (
-    <div className="flex flex-col items-center justify-center mt-24">
-      <div className="bg-white p-12 rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold">W trakcie budowy</h1>
+    <div className="flex flex-col">
+      <div className="flex">
+        {users.map((user) => (
+          <SingleUser key={user.id} user={user} />
+        ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Users;
+export default Users

@@ -53,6 +53,8 @@ model User {
   id        String   @id @default(cuid())
   clerkId   String   @unique
   email     String   @unique
+  name      String
+  role      String   @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -65,7 +67,6 @@ model Player {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   gameId        String
-  name          String
   questionValue Int            @default(0)
   game          Game           @relation(fields: [gameId], references: [id])
   AssignedCard  AssignedCard[]

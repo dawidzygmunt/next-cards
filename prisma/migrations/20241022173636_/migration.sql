@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Player" ALTER COLUMN "name" DROP NOT NULL,
+ALTER COLUMN "name" SET DEFAULT 'Admin',
+ALTER COLUMN "role" DROP NOT NULL;
