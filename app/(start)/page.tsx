@@ -26,34 +26,34 @@ const MainMenu = () => {
   return (
     <>
       <BackgroundGradientAnimation />
-      <div className="absolute inset-0 items-center justify-center text-white font-bold px-4 text-3xl text-center md:text-4xl lg:text-7xl flex flex-col">
-        <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20 mb-20">
-          Prawda chodzi boso
+      <div className="absolute inset-0 items-center justify-center text-white font-bold px-4 text-5xl text-center lg:text-7xl flex flex-col">
+        <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20">
+          Gra karciana
         </p>
-        <div className="flex flex-col text-2xl gap-2 p-24 py-36">
+        <div className="flex flex-col text-2xl gap-2 py-24 items-center">
           <Button
-            className="w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300"
+            className="w-[260px] sm:w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300"
             onClick={newGame}
           >
             Nowa gra
           </Button>
 
           <Button
-            className="w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300"
+            className="w-[260px] sm:w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300"
             onClick={handleContinue}
           >
             Kontynuj
           </Button>
 
           <Link href="/admin/dashboard">
-            <Button className="w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300">
-              Ustawienia
+            <Button className="w-[260px] sm:w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300">
+              Panel zarządzania
             </Button>
           </Link>
 
           <Link href="/credits">
-            <Button className="w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300">
-              Credits
+            <Button className="w-[260px] sm:w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300">
+              Zgłoś błąd
             </Button>
           </Link>
         </div>
