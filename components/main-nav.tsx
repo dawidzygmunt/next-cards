@@ -2,11 +2,8 @@
 import { cn } from "@/lib/utils"
 import {
   BookDashedIcon,
-  CalendarDays,
-  Icon,
   LayoutDashboard,
   LibraryBig,
-  Mail,
   Plus,
   Settings,
   SignalMedium,
@@ -59,12 +56,6 @@ export const MainNav = ({
       label: "New card",
       active: pathName === `/admin/new-card`,
       icon: <Plus />,
-    },
-    {
-      href: `/messages`,
-      label: "Messages",
-      active: pathName === `/admin/messages`,
-      icon: <Mail />,
     },
     {
       href: `/tickets`,
