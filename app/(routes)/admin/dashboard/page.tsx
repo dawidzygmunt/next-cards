@@ -39,9 +39,9 @@ const AdminPanel = async () => {
   const today = new Date().toDateString()
 
   return (
-    <div className="flex gap-16 w-full">
+    <div className="grid grid-cols-1 2xl:grid-cols-2 gap-16">
       <div className="flex w-full">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <AnalysticTile
             title="Pytania"
             amount={truthCards as number}
@@ -91,7 +91,7 @@ const AdminPanel = async () => {
           </AnalysticTile>
         </div>
       </div>
-      <div className="flex w-full">
+      <div>
         <Table>
           <TableCaption>Lista ostatnio dodanych kart</TableCaption>
           <TableHeader>
