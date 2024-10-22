@@ -16,7 +16,7 @@ export default async function DashboardLayout({
     return (
       <div className="flex">
         <SideNavbar />
-        <div className="m-12 my-16 w-full min-h-screen">{children}</div>
+        <div className="m-12 my-8 w-full min-h-screen">{children}</div>
       </div>
     )
   }

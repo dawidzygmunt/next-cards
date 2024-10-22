@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useParams } from "next/navigation"
 import { getAllCollections } from "@/actions/collections/get-all-collections"
 import toast from "react-hot-toast"
+import prisma from "@/lib/prisma"
 
 const GameCollection = async ({
   params,
@@ -17,29 +18,46 @@ const GameCollection = async ({
     return
   }
 
-  return (
-    <div className="flex flex-1 gap-5 flex-wrap">
-      <Link href={`/admin/editions/${params.editionId}/add`}>
-        <div
-          className="w-[200px] h-[200px] bg-slate-400 rounded-xl flex justify-center items-center
-        text-center hover:bg-slate-300 hover:cursor-pointer transition-all duration-300"
-        >
-          <div className="text-center flex flex-col justify-center items-center">
-            Dodaj nową kolekcję
-            <Plus className="mt-1" />
-          </div>
-        </div>
-      </Link>
+  const edition = await prisma.edition.findFirst({
+    where: {
+      id: params.editionId,
+    },
+  })
 
-      {collections &&
-        collections.map((collection) => (
-          <Link
-            key={collection.id}
-            href={`/admin/all-cards?collection=${collection.id}}`}
+  if (edition && "error" in edition) {
+    toast.error("Nie znaleziono edycji")
+    return
+  }
+
+  return (
+    <div className="flex flex-col">
+      <h1>
+        Wszystkie wersje gry{" "}
+        <span className="font-semibold">{edition?.name}</span>
+      </h1>
+      <div className="flex flex-1 gap-5 flex-wrap">
+        <Link href={`/admin/editions/${params.editionId}/add`}>
+          <div
+            className="w-[200px] h-[200px] bg-green-400 rounded-xl flex justify-center items-center
+        text-center hover:bg-green-600 hover:cursor-pointer transition-all duration-300"
           >
-            <SingleCollection collection={collection} />
-          </Link>
-        ))}
+            <div className="text-center flex flex-col justify-center items-center">
+              Dodaj nową wersję
+              <Plus className="mt-1" />
+            </div>
+          </div>
+        </Link>
+
+        {collections &&
+          collections.map((collection) => (
+            <Link
+              key={collection.id}
+              href={`/admin/all-cards?collection=${collection.id}}`}
+            >
+              <SingleCollection collection={collection} />
+            </Link>
+          ))}
+      </div>
     </div>
   )
 }

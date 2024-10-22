@@ -7,6 +7,7 @@ const Users = async () => {
 
   return (
     <div className="flex flex-col">
+      <h1>Zarejestrowani użytkownicy</h1>
       <div className="flex">
         {users.map((user) => (
           <SingleUser key={user.id} user={user} />
