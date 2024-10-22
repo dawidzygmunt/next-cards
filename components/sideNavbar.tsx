@@ -8,7 +8,7 @@ function SideNavbar() {
   const router = useRouter()
 
   return (
-    <aside className="w-[220px] flex flex-col ">
+    <aside className="w-[240px] flex flex-col ">
       <div
         className="flex m-4 hover:cursor-pointer justify- items-center"
         onClick={() => router.push("/")}

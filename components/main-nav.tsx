@@ -1,5 +1,5 @@
-"use cleint";
-import { cn } from "@/lib/utils";
+"use cleint"
+import { cn } from "@/lib/utils"
 import {
   BookDashedIcon,
   CalendarDays,
@@ -12,22 +12,22 @@ import {
   SignalMedium,
   Ticket,
   User,
-} from "lucide-react";
-import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
-import React from "react";
+} from "lucide-react"
+import Link from "next/link"
+import { useParams, usePathname } from "next/navigation"
+import React from "react"
 
 export const MainNav = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) => {
-  const pathName = usePathname();
-  const params = useParams();
+  const pathName = usePathname()
+  const params = useParams()
   const routes = [
     {
       href: `/dashboard`,
       label: "Dashboard",
-      active: pathName === `/admin/dashboard}`,
+      active: pathName === `/admin/dashboard`,
       icon: <LayoutDashboard />,
     },
     {
@@ -78,7 +78,7 @@ export const MainNav = ({
       active: pathName === `/admin/settings`,
       icon: <Settings />,
     },
-  ];
+  ]
   return (
     <nav>
       {routes.map((route) => (
@@ -103,5 +103,5 @@ export const MainNav = ({
         </Link>
       ))}
     </nav>
-  );
-};
+  )
+}
