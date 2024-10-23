@@ -51,7 +51,7 @@ const MainMenu = () => {
             </Button>
           </Link>
 
-          <Link href="/credits">
+          <Link href="/report-bug">
             <Button className="w-[260px] sm:w-[300px] py-6  rounded-3xl border-2 border-gray-500 hover:border-white transition-all duration-300">
               Zgłoś błąd
             </Button>

@@ -59,13 +59,15 @@ model User {
   updatedAt DateTime @updatedAt
 
   userCollections UserCollection[]
-  game            Game?
+
+  game Game?
 }
 
 model Player {
   id            String         @id @default(cuid())
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  name          String
   gameId        String
   questionValue Int            @default(0)
   game          Game           @relation(fields: [gameId], references: [id])
@@ -107,4 +109,14 @@ model AssignedCard {
   game   Game   @relation(fields: [gameId], references: [id])
   card   Card   @relation(fields: [cardId], references: [id])
   player Player @relation(fields: [playerId], references: [id])
+}
+
+model Ticket {
+  id       String @id @default(cuid())
+  priority Int
+  status   String @default("open")
+  content  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
