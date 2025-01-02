@@ -1,5 +1,5 @@
-"use client"
-import { Button } from "@/components/ui/button"
+'use client'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -7,25 +7,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import useCreatePlayer from "@/hooks/players/use-create-player"
-import useGetPlayers from "@/hooks/players/use-get-players"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Player } from "@prisma/client"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import SinglePlayer from "./components/single-player"
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import useCreatePlayer from '@/hooks/players/use-create-player'
+import useGetPlayers from '@/hooks/players/use-get-players'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Player } from '@prisma/client'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import SinglePlayer from './components/single-player'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import GameNav from '@/components/game-nav'
 
 const formSchema = z.object({
   playerName: z
     .string()
     .min(3, {
-      message: "Nazwa musi mieć conajmniej 3 znaki",
+      message: 'Nazwa musi mieć conajmniej 3 znaki',
     })
     .max(12, {
-      message: "Maksymalna długość to 12 znaków",
+      message: 'Maksymalna długość to 12 znaków',
     }),
 })
 
@@ -39,14 +41,14 @@ const NewGame = ({
   const createPlayerMutation = useCreatePlayer()
 
   const goMainButtonHandle: React.MouseEventHandler = () => {
-    router.push("/game")
+    router.push('/game')
   }
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      playerName: "",
+      playerName: '',
     },
   })
 
@@ -57,62 +59,72 @@ const NewGame = ({
   }
 
   return (
-    <div className="flex flex-col w-full min-h-screen items-center pt-20 lg:mt-20 p-3">
-      <div>
-        <div className="bg-white shadow-xl border border-black p-4 sm:px-10 py-4 pb-6 rounded-md">
-          <h3>Nazwa Gracza</h3>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8 flex"
-            >
-              <div className="flex">
-                <FormField
-                  control={form.control}
-                  name="playerName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel> </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="np. Tomek"
-                          {...field}
-                          className="lg:min-w-[250px]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+    <>
+      <GameNav data={{ title: 'dodaj graczy', href: '/' }} />
+      <div className="flex flex-col items-center pt-10 lg:pt-16 px-7">
+        <div className="w-full">
+          <div className="bg-white shadow-xl border border-black p-4 rounded-md mb-10 ">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8 flex w-full"
+              >
+                <div className="flex justify-between w-full gap-6">
+                  <FormField
+                    control={form.control}
+                    name="playerName"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormControl>
+                          <Input
+                            placeholder="np. Tomek"
+                            {...field}
+                            className="w-full"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button
+                    type="submit"
+                    className="bg-[#0e34a0]"
+                  >
+                    Dodaj
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </div>
+        </div>
+
+        <ScrollArea
+          className="h-[400px] w-full"
+          // type="none"
+        >
+          <div className="flex flex-col w-full overflow-y-auto">
+            {players &&
+              players.map((player: Player) => (
+                <SinglePlayer
+                  key={player.id}
+                  playerId={player.id}
+                  playerName={player.name}
                 />
-                <Button type="submit" className="ml-3 mt-[7px] bg-[#0e34a0]">
-                  Dodaj
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </div>
+              ))}
+          </div>
+        </ScrollArea>
 
-        <div className="flex flex-col mt-10 lg:mt-20 w-full">
-          {players &&
-            players.map((player: Player) => (
-              <SinglePlayer
-                key={player.id}
-                playerId={player.id}
-                playerName={player.name}
-              />
-            ))}
+        <div className="absolute bottom-0 bg-black/15 w-full p-8">
+          <Button
+            className="uppercase font-semibold text-4xl p-8 w-full "
+            onClick={goMainButtonHandle}
+          >
+            graj
+          </Button>
         </div>
       </div>
-      <div>
-        <Button className="mx-1" onClick={() => router.push("/")}>
-          Wróć
-        </Button>
-
-        <Button className="mx-1" onClick={goMainButtonHandle}>
-          Dalej
-        </Button>
-      </div>
-    </div>
+    </>
   )
 }
 

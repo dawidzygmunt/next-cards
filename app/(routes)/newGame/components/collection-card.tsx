@@ -1,10 +1,9 @@
-"use client"
+'use client'
 
-import axiosClient from "@/lib/api-client"
-import { VeganIcon } from "lucide-react"
+import axiosClient from '@/lib/api-client'
 
-import { useRouter } from "next/navigation"
-import React from "react"
+import { useRouter } from 'next/navigation'
+import React from 'react'
 
 const CollectionCard = ({
   name,
@@ -17,7 +16,7 @@ const CollectionCard = ({
 
   const handleClick = async () => {
     try {
-      await axiosClient.post("/api/game", {
+      await axiosClient.post('/api/game', {
         collectionId,
       })
       router.push(`/newGame/${collectionId}`)
@@ -28,12 +27,10 @@ const CollectionCard = ({
 
   return (
     <div
-      className="p-4 min-h-[200px] min-w-[150px] text-center bg-slate-300 rounded-lg border border-gray-500 flex 
-      flex-col items-center gap-10 hover:bg-gray-700 transition-all hover:text-white duration-300 hover:cursor-pointer"
+      className="p-3 bg-[#1b1b20] rounded-2xl"
       onClick={handleClick}
     >
-      <h1 className="font-bold text-2xl">{name}</h1>
-      <VeganIcon size={50} className="text-green-500" />
+      <h1 className="font-bold text-xl text-white">{name}</h1>
     </div>
   )
 }

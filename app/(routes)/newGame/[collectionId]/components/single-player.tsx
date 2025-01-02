@@ -1,7 +1,7 @@
-"use client"
-import { Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import useDeletePlayer from "@/hooks/players/use-delete-player"
+'use client'
+import { Button } from '@/components/ui/button'
+import useDeletePlayer from '@/hooks/players/use-delete-player'
+import { XCircleIcon } from 'lucide-react'
 
 interface SinglePlayerProps {
   playerName: string
@@ -20,19 +20,26 @@ const SinglePlayer: React.FC<SinglePlayerProps> = ({
   }
 
   return (
-    <div className="flex justify-between items-center bg-white shadow-lg rounded-lg my-2 p-2 w-full border border-gray-300">
-      <h3 className="text-xl">{playerName}</h3>
-      <span>
-        <Button
-          variant="destructive"
-          size="sm"
-          className="mx-1 px-4 py-1 text-xs"
-          onClick={handleDeleteButton}
-        >
-          <Trash2 size={15} />
-        </Button>
-      </span>
-    </div>
+    <>
+      <div className="flex items-center justify-between gap-7">
+        <div className="bg-white shadow-lg rounded-lg my-2 p-1 px-3 border border-gray-300 p2-3 w-full flex items-center justify-between">
+          <h3 className="text-lg">{playerName}</h3>
+          <span>
+            <Button
+              variant="ghost"
+              onClick={handleDeleteButton}
+              className="m-0 p-0"
+            >
+              <XCircleIcon size={25} />
+            </Button>
+          </span>
+        </div>
+        <div className="flex">
+          <Button variant="ghost">M</Button>
+          <Button variant="ghost">F</Button>
+        </div>
+      </div>
+    </>
   )
 }
 
