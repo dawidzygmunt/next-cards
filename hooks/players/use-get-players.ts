@@ -1,14 +1,20 @@
-import axiosClient from "@/lib/api-client"
-import { useQuery } from "@tanstack/react-query"
+import axiosClient from '@/lib/api-client'
+import { Player } from '@prisma/client'
+import { useQuery } from '@tanstack/react-query'
 
 const useGetPlayers = () => {
-  return useQuery({
-    queryKey: ["players"],
+  const { data, status, isSuccess } = useQuery<Player[]>({
+    queryKey: ['players'],
     queryFn: async () => {
-      const { data } = await axiosClient.get("/api/players")
-      return data
+      try {
+        const { data } = await axiosClient.get('/api/players')
+        return data
+      } catch (error) {
+        console.log("can't fetch players")
+      }
     },
   })
+  return { data, status, isSuccess }
 }
 
 export default useGetPlayers

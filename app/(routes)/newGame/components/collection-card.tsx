@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import axiosClient from '@/lib/api-client'
 
 import { useRouter } from 'next/navigation'
@@ -26,12 +27,12 @@ const CollectionCard = ({
   }
 
   return (
-    <div
-      className="p-3 bg-[#1b1b20] rounded-2xl"
+    <Button
+      className="text-2xl p-7 bg-[#0a0a1d] rounded-2xl"
       onClick={handleClick}
     >
-      <h1 className="font-bold text-xl text-white">{name}</h1>
-    </div>
+      {name}
+    </Button>
   )
 }
 

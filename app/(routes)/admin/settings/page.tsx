@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   Card as CardComponent,
@@ -6,17 +6,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ChevronRight } from "lucide-react"
-import { useRouter } from "next/navigation"
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { ChevronRight } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const Settings = () => {
   const router = useRouter()
 
   return (
     <div>
-      <h1>Ustawienia</h1>
+      <h1>Settings</h1>
 
       <div className="flex gap-4">
         <CardComponent className="w-[300px]">
@@ -44,7 +44,7 @@ const Settings = () => {
             </CardDescription>
           </CardHeader>
           <CardFooter>
-            <Button onClick={() => router.push("render-pdf")}>
+            <Button onClick={() => router.push('render-pdf')}>
               Przejdź
               <ChevronRight />
             </Button>

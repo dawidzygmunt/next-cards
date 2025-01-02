@@ -60,7 +60,10 @@ const NewGame = ({
 
   return (
     <>
-      <GameNav data={{ title: 'dodaj graczy', href: '/' }} />
+      <GameNav
+        title="dodaj graczy"
+        href="/"
+      />
       <div className="flex flex-col items-center pt-10 lg:pt-16 px-7">
         <div className="w-full">
           <div className="bg-white shadow-xl border border-black p-4 rounded-md mb-10 ">

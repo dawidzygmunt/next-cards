@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { Button } from "@/components/ui/button"
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,8 +11,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
 import {
   Select,
@@ -20,20 +20,20 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select'
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from '@/components/ui/card'
 
-import { toast } from "react-hot-toast"
+import { toast } from 'react-hot-toast'
 
-import { Textarea } from "@/components/ui/textarea"
-import CardBasic from "@/components/card-basic"
-import { useEffect, useState } from "react"
-import getAllCollectionsForTruthOrDare from "@/actions/cards/get-all-collections-for-truth-or-dare"
-import { Collection } from "@prisma/client"
+import { Textarea } from '@/components/ui/textarea'
+import CardBasic from '@/components/card-basic'
+import { useEffect, useState } from 'react'
+import getAllCollectionsForTruthOrDare from '@/actions/cards/get-all-collections-for-truth-or-dare'
+import { Collection } from '@prisma/client'
 
-import { newCardFormSchema } from "@/schemas/new-card-form-schema"
-import { createSingleCard } from "@/actions/cards/create-single-card"
+import { newCardFormSchema } from '@/schemas/new-card-form-schema'
+import { createSingleCard } from '@/actions/cards/create-single-card'
 
 const AdminNewCard = () => {
   const [data, setData] = useState<Collection[]>([])
@@ -41,7 +41,7 @@ const AdminNewCard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await getAllCollectionsForTruthOrDare()
-      if ("error" in result) {
+      if ('error' in result) {
         toast.error(result.error)
         return
       }
@@ -53,8 +53,8 @@ const AdminNewCard = () => {
   const form = useForm<z.infer<typeof newCardFormSchema>>({
     resolver: zodResolver(newCardFormSchema),
     defaultValues: {
-      type: "Prawda",
-      collectionId: data[0]?.id || "",
+      type: 'Prawda',
+      collectionId: data[0]?.id || '',
       amount: 1,
       punishment: 1,
     },
@@ -63,16 +63,16 @@ const AdminNewCard = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof newCardFormSchema>) {
     const result = await createSingleCard(values)
-    if ("error" in result) {
+    if ('error' in result) {
       toast.error(result.error)
       return
     }
-    toast.success("Dodano kartę")
+    toast.success('Dodano kartę')
   }
 
   return (
     <div className="flex flex-col">
-      <h1>Dodaj nową kartę</h1>
+      <h1>Add new card</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="flex flex-col items-center ">
           <Card className="w-full max-w-[700px]">
@@ -179,19 +179,19 @@ const AdminNewCard = () => {
                         <FormControl>
                           <div className="flex justify-center gap-10 text-2xl ">
                             <Button
-                              onClick={() => field.onChange("1")}
+                              onClick={() => field.onChange('1')}
                               type="button"
                             >
                               1
                             </Button>
                             <Button
-                              onClick={() => field.onChange("2")}
+                              onClick={() => field.onChange('2')}
                               type="button"
                             >
                               2
                             </Button>
                             <Button
-                              onClick={() => field.onChange("3")}
+                              onClick={() => field.onChange('3')}
                               type="button"
                             >
                               3

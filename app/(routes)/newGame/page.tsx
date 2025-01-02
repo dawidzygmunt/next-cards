@@ -20,9 +20,12 @@ const SelectColection = async () => {
     return <h1>{collections.error}</h1>
   }
   return (
-    <div className="flex flex-col items-center">
-      <GameNav data={{ title: 'wybierz poziom', href: '/' }} />
-      <div className="flex flex-col gap-8 pt-6 w-full p-6">
+    <div className="flex flex-col w-full items-center justify-center">
+      <GameNav
+        title="wybierz poziom"
+        href="/"
+      />
+      <div className="flex flex-col w-full gap-8 pt-6 p-16 max-w-[600px]">
         {collections.map((collection) => (
           <CollectionCard
             name={collection.name}

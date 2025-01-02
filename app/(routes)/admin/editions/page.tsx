@@ -1,16 +1,16 @@
-import SingleEdition from "./components/singleEdition"
-import { Plus } from "lucide-react"
-import Link from "next/link"
-import getAllEditions from "@/actions/editions/get-all-editions"
+import SingleEdition from './components/singleEdition'
+import { Plus } from 'lucide-react'
+import Link from 'next/link'
+import getAllEditions from '@/actions/editions/get-all-editions'
 
 const CardEditions = async () => {
   const editions = await getAllEditions()
 
   return (
     <div className="flex flex-col">
-      <h1>Wszytkie gry</h1>
+      <h1>All editions</h1>
       <div className="flex flex-1 gap-5 flex-wrap">
-        <Link href={"/admin/editions/add"}>
+        <Link href={'/admin/editions/add'}>
           <div
             className="w-[200px] h-[200px] bg-slate-400 rounded-xl flex justify-center items-center
           text-center hover:bg-slate-300 hover:cursor-pointer transition-all duration-300"
@@ -24,7 +24,10 @@ const CardEditions = async () => {
 
         {editions &&
           editions.map((edition) => (
-            <Link key={edition.id} href={`/admin/editions/${edition.id}`}>
+            <Link
+              key={edition.id}
+              href={`/admin/editions/${edition.id}`}
+            >
               <SingleEdition edition={edition} />
             </Link>
           ))}
