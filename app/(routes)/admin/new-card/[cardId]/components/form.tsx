@@ -1,9 +1,6 @@
-"use client"
+'use client'
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,8 +8,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
 import {
   Select,
@@ -20,57 +20,42 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select'
 
-import { Card as BasicCard, CardContent } from "@/components/ui/card"
+import { Card as BasicCard, CardContent } from '@/components/ui/card'
 
-import { toast } from "react-hot-toast"
+import { toast } from 'react-hot-toast'
 
-import { Textarea } from "@/components/ui/textarea"
-import CardBasic from "@/components/card-basic"
-import { useEffect, useState } from "react"
-import getAllCollectionsForTruthOrDare from "@/actions/cards/get-all-collections-for-truth-or-dare"
-import { Card, Collection } from "@prisma/client"
-import { newCardFormSchema } from "@/schemas/new-card-form-schema"
+import CardBasic from '@/components/card-basic'
+import { Textarea } from '@/components/ui/textarea'
+import { newCardFormSchema } from '@/schemas/new-card-form-schema'
+import { Card, Collection, Prisma } from '@prisma/client'
+import { useEffect } from 'react'
 
-import editSingleCard from "@/actions/cards/edit-single-card"
-import getSingleCard from "@/actions/cards/get-single-card"
-import { useRouter } from "next/navigation"
+import editSingleCard from '@/actions/cards/edit-single-card'
+import { useRouter } from 'next/navigation'
 
-const AdminEditCard = ({ params }: { params: { cardId: string } }) => {
-  const [data, setData] = useState<Collection[]>([])
-  const [card, setCard] = useState<Card>()
+type CardWithCollection = Prisma.CardGetPayload<{
+  include: { Collection: true }
+}>
+
+const AdminEditCard = ({
+  card,
+  collections,
+}: {
+  card: CardWithCollection
+  collections: Collection[]
+}) => {
+  console.log(card)
+
   const router = useRouter()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getAllCollectionsForTruthOrDare()
-      if ("error" in result) {
-        toast.error(result.error)
-        return
-      }
-      setData(result)
-    }
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getSingleCard(params.cardId)
-      if ("error" in result) {
-        toast.error(result.error)
-        return
-      }
-      setCard(result)
-    }
-    fetchData()
-  }, [])
   // 1. Define your form.
   const form = useForm<z.infer<typeof newCardFormSchema>>({
     resolver: zodResolver(newCardFormSchema),
     defaultValues: {
       type: card?.type,
-      collectionId: card?.collectionId,
+      collectionId: card.collectionId,
       amount: card?.amount,
       content: card?.content,
       punishment: card?.punishment,
@@ -92,16 +77,16 @@ const AdminEditCard = ({ params }: { params: { cardId: string } }) => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof newCardFormSchema>) {
     if (!card) {
-      toast.error("Card not found")
+      toast.error('Card not found')
       return
     }
     const result = await editSingleCard(card.id, values)
-    if ("error" in result) {
+    if ('error' in result) {
       toast.error(result.error)
       return
     }
-    router.push("/admin/all-cards")
-    toast.success("Zaktualizowano kartę")
+    router.push('/admin/all-cards')
+    toast.success('Zaktualizowano kartę')
   }
 
   return (
@@ -143,15 +128,18 @@ const AdminEditCard = ({ params }: { params: { cardId: string } }) => {
                   name="collectionId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex ">Wersja</FormLabel>
-                      <Select onValueChange={field.onChange}>
+                      <FormLabel className="flex">Wersja</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger className="w-[180px] text-black">
                             <SelectValue placeholder="Wybierz" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {data.map((collection) => (
+                          {collections.map((collection) => (
                             <SelectItem
                               key={collection.id}
                               value={collection.id}
@@ -173,7 +161,11 @@ const AdminEditCard = ({ params }: { params: { cardId: string } }) => {
                     <FormItem>
                       <FormLabel className="flex">Ilość powtórzeń</FormLabel>
                       <FormControl>
-                        <Input {...field} type="number" className="w-[180px]" />
+                        <Input
+                          {...field}
+                          type="number"
+                          className="w-[180px]"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -207,19 +199,19 @@ const AdminEditCard = ({ params }: { params: { cardId: string } }) => {
                       <FormControl>
                         <div className="flex justify-center gap-10 text-2xl ">
                           <Button
-                            onClick={() => field.onChange("1")}
+                            onClick={() => field.onChange('1')}
                             type="button"
                           >
                             1
                           </Button>
                           <Button
-                            onClick={() => field.onChange("2")}
+                            onClick={() => field.onChange('2')}
                             type="button"
                           >
                             2
                           </Button>
                           <Button
-                            onClick={() => field.onChange("3")}
+                            onClick={() => field.onChange('3')}
                             type="button"
                           >
                             3
@@ -238,7 +230,10 @@ const AdminEditCard = ({ params }: { params: { cardId: string } }) => {
       </div>
 
       <div className="flex flex-col gap-10 w-full justify-center relative">
-        <CardBasic data={{ ...form }.watch()} />
+        <CardBasic
+          collections={collections}
+          data={{ ...form }.watch()}
+        />
       </div>
     </div>
   )

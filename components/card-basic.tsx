@@ -1,9 +1,5 @@
-'use client'
-
-import { getSingleCollection } from '@/actions/collections/get-single-collection'
+import prisma from '@/lib/prisma'
 import { Collection } from '@prisma/client'
-import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
 
 interface Card {
   type: string
@@ -13,7 +9,17 @@ interface Card {
   collectionId: string
 }
 
-const CardBasic = ({ data }: { data: Card | undefined }) => {
+const CardBasic = ({
+  data,
+  collections,
+}: {
+  data: Card | undefined
+  collections: Collection[]
+}) => {
+  const collection = collections.find(
+    (collection) => collection.id === data?.collectionId
+  )
+
   if (!data) {
     return <div>Wybierz...</div>
   }
@@ -33,6 +39,8 @@ const CardBasic = ({ data }: { data: Card | undefined }) => {
         <div className="flex text-wrap text-center justify-center m-8">
           {data.content}
         </div>
+
+        <div className="absolute bottom-1 left-1">{collection?.name}</div>
 
         <div className="absolute right-1 bottom-1">{data.punishment}</div>
       </div>

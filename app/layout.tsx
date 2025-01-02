@@ -21,7 +21,9 @@ export default function RootLayout({
     <ClerkProvider>
       <ReactQueryClientProvider>
         <html lang="en">
-          <body className={`${inter.className} bg-red-300 w-full min-h-screen`}>
+          <body
+            className={`${inter.className} bg-[#e75643] w-full min-h-screen`}
+          >
             <ToasterProvider />
             {children}
           </body>

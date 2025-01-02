@@ -1,26 +1,29 @@
-"use client"
+'use client'
 
-import continueGame from "@/actions/game/continue-game"
-import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import toast from "react-hot-toast"
+import continueGame from '@/actions/game/continue-game'
+import { BackgroundGradientAnimation } from '@/components/ui/background-gradient-animation'
+import { Button } from '@/components/ui/button'
+import { QueryClient, useQueryClient } from '@tanstack/react-query'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 const MainMenu = () => {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const newGame = async () => {
-    router.push("/newGame")
+    queryClient.invalidateQueries({ queryKey: ['players'] })
+    router.push('/newGame')
   }
 
   const handleContinue = async () => {
     const result = await continueGame()
-    if ("error" in result) {
+    if ('error' in result) {
       toast.error(result.error)
       return
     }
-    router.push("/game")
+    router.push('/game')
   }
 
   return (

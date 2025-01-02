@@ -1,47 +1,47 @@
-"use client";
-import deleteSingleCard from "@/actions/cards/delete-single-card";
+'use client'
+import deleteSingleCard from '@/actions/cards/delete-single-card'
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import Link from "next/link";
-import toast from "react-hot-toast";
+} from '@/components/ui/context-menu'
+import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 interface CardAllCardsProps {
   data: {
     Collection: {
-      id: string;
-      name: string;
-      createdAt: Date;
-      updatedAt: Date;
-      price: number;
-      editionId: string;
-    } | null;
+      id: string
+      name: string
+      createdAt: Date
+      updatedAt: Date
+      price: number
+      editionId: string
+    } | null
   } & {
-    id: string;
-    type: string;
-    content: string;
-    createdAt: Date;
-    updatedAt: Date;
-    amount: number;
-    punishment: number;
-    collectionId: string;
-  };
+    id: string
+    type: string
+    content: string
+    createdAt: Date
+    updatedAt: Date
+    amount: number
+    punishment: number
+    collectionId: string
+  }
 }
 
 const CardAllCards = ({ data }: CardAllCardsProps) => {
-  console.log(data);
+  console.log(data)
 
   const handleDelete = async () => {
-    const result = deleteSingleCard(data.id);
-    if ("error" in result) {
-      toast.error("Something went wrong");
-      return;
+    const result = deleteSingleCard(data.id)
+    if ('error' in result) {
+      toast.error('Something went wrong')
+      return
     }
-    toast.success("Card deleted successfully");
-  };
+    toast.success('Card deleted successfully')
+  }
 
   return (
     <>
@@ -73,13 +73,13 @@ const CardAllCards = ({ data }: CardAllCardsProps) => {
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <Link href={`/admin/all-cards/${data.id}`}>
+        <Link href={`/admin/new-card/${data.id}`}>
           <ContextMenuItem>Edit</ContextMenuItem>
         </Link>
         <ContextMenuItem onClick={handleDelete}>Delete</ContextMenuItem>
       </ContextMenuContent>
     </>
-  );
-};
+  )
+}
 
-export default CardAllCards;
+export default CardAllCards

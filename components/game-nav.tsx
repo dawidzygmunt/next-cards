@@ -8,7 +8,7 @@ const GameNav = ({ title, href }: { title: string; href: string }) => {
         <ArrowLeftIcon size={20} />
       </Link>
 
-      <h1 className="text-xl uppercase font-semibold">{title}</h1>
+      <span className="text-xl uppercase font-semibold">{title}</span>
       <div></div>
     </div>
   )
