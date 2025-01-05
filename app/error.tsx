@@ -1,6 +1,6 @@
-"use client" // Error components must be Client Components
+'use client' // Error components must be Client Components
 
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
 export default function Error({
   error,
@@ -15,7 +15,7 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-white">
       <h2>Something went wrong!</h2>
       <button
         onClick={

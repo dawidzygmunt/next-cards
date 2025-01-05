@@ -1,9 +1,9 @@
-"use client"
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+'use client'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 import {
   Form,
@@ -12,26 +12,29 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Card, CardContent } from "@/components/ui/card"
-import { toast } from "react-hot-toast"
-import { addSingleCollection } from "@/actions/collections/add-single-collection"
+} from '@/components/ui/form'
+import { Card, CardContent } from '@/components/ui/card'
+import { toast } from 'react-hot-toast'
+import { addSingleCollection } from '@/actions/collections/add-single-collection'
+import { revalidatePath } from 'next/cache'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: "Wpisz nazwe",
+    message: 'Wpisz nazwe',
   }),
   price: z.coerce.number().min(1, {
-    message: "Wybierz cene",
+    message: 'Wybierz cene',
   }),
 })
 
 const CreateCollection = ({ params }: { params: { editionId: string } }) => {
+  const router = useRouter()
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: '',
       price: 4000,
     },
   })
@@ -43,11 +46,12 @@ const CreateCollection = ({ params }: { params: { editionId: string } }) => {
       values.price,
       params.editionId
     )
-    if ("error" in result) {
+    if ('error' in result) {
       toast.error(result.error)
       return
     }
-    toast.success("Dodano kolekcję")
+    toast.success('Dodano kolekcję')
+    router.back()
   }
 
   return (
@@ -69,7 +73,10 @@ const CreateCollection = ({ params }: { params: { editionId: string } }) => {
                         Nazwa kolekcji
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Classic" {...field} />
+                        <Input
+                          placeholder="Classic"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -83,7 +90,10 @@ const CreateCollection = ({ params }: { params: { editionId: string } }) => {
                     <FormItem>
                       <FormLabel className="flex">Cena</FormLabel>
                       <FormControl>
-                        <Input {...field} className="w-[180px]" />
+                        <Input
+                          {...field}
+                          className="w-[180px]"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

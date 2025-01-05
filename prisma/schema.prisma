@@ -64,14 +64,16 @@ model User {
 }
 
 model Player {
-  id            String         @id @default(cuid())
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id            String   @id @default(cuid())
   name          String
-  gameId        String
-  questionValue Int            @default(0)
-  game          Game           @relation(fields: [gameId], references: [id])
-  AssignedCard  AssignedCard[]
+  gender        String?
+  questionValue Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  gameId       String
+  game         Game           @relation(fields: [gameId], references: [id])
+  AssignedCard AssignedCard[]
 }
 
 model UserCollection {

@@ -8,6 +8,7 @@ import { Card } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import CurrentPlayer from './components/current-player'
+import ContentDisplay from './components/content-display'
 
 const Game = () => {
   const mutationFn = useDrawCard()
@@ -91,7 +92,7 @@ const Game = () => {
           index={playerIndex}
           players={players}
         />
-        {(stage === 2 || stage === 5) && <CardBasic data={data} />}
+        {(stage === 2 || stage === 5) && <ContentDisplay data={data} />}
       </div>
 
       {/* Truth and Dare buttons */}

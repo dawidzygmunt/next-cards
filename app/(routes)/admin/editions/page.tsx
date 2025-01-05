@@ -16,7 +16,7 @@ const CardEditions = async () => {
           text-center hover:bg-slate-300 hover:cursor-pointer transition-all duration-300"
           >
             <div className="text-center flex flex-col justify-center items-center">
-              Dodaj nową gre
+              Add new game
               <Plus className="mt-1" />
             </div>
           </div>

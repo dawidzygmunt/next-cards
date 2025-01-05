@@ -1,12 +1,13 @@
-import prisma from "@/lib/prisma"
-import { auth } from "@clerk/nextjs/server"
-import { NextResponse } from "next/server"
+import prisma from '@/lib/prisma'
+import { auth } from '@clerk/nextjs/server'
+import { revalidatePath } from 'next/cache'
+import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
   try {
     const { userId } = auth()
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 })
+      return new NextResponse('Unauthorized', { status: 401 })
     }
     const game = await prisma.game.findFirst({
       where: {
@@ -14,12 +15,12 @@ export async function GET(req: Request) {
       },
     })
     if (!game) {
-      return new NextResponse("No game found", { status: 404 })
+      return new NextResponse('No game found', { status: 404 })
     }
     return NextResponse.json(game)
   } catch (error) {
-    console.log("[GAME]", error)
-    return new NextResponse("Internal error", { status: 500 })
+    console.log('[GAME]', error)
+    return new NextResponse('Internal error', { status: 500 })
   }
 }
 
@@ -27,11 +28,11 @@ export async function POST(req: Request) {
   try {
     const { userId } = auth()
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 })
+      return new NextResponse('Unauthorized', { status: 401 })
     }
     const body = await req.json()
     const { collectionId } = body
-    console.log("[GAME]", collectionId)
+    console.log('[GAME]', collectionId)
 
     const previousGame = await prisma.game.findFirst({
       where: {
@@ -60,13 +61,13 @@ export async function POST(req: Request) {
     const game = await prisma.game.create({
       data: {
         clerkId: userId,
-        status: "in progress",
+        status: 'in progress',
         collectionId: collectionId,
       },
     })
     return NextResponse.json(game)
   } catch (error) {
-    console.log("[GAME]", error)
-    return new NextResponse("Internal error", { status: 500 })
+    console.log('[GAME]', error)
+    return new NextResponse('Internal error', { status: 500 })
   }
 }
