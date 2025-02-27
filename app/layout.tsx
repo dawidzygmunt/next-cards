@@ -22,7 +22,7 @@ export default function RootLayout({
       <ReactQueryClientProvider>
         <html lang="en">
           <body
-            className={`${inter.className} bg-[#e75643] w-full min-h-screen`}
+            className={`${inter.className} bg-[#e75643] sm:bg-[#b3b3b3] w-full min-h-screen`}
           >
             <ToasterProvider />
             {children}

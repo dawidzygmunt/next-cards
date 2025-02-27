@@ -2,8 +2,6 @@ import { getAllCollections } from '@/actions/collections/get-all-collections'
 import prisma from '@/lib/prisma'
 import React from 'react'
 import CollectionCard from './components/collection-card'
-import { ArrowLeftIcon } from 'lucide-react'
-import Link from 'next/link'
 import GameNav from '@/components/game-nav'
 
 const SelectColection = async () => {

@@ -1,9 +1,21 @@
+import { cn } from '@/lib/utils'
 import { ArrowLeftIcon } from 'lucide-react'
 import Link from 'next/link'
 
-const GameNav = ({ title, href }: { title: string; href: string }) => {
+interface GameNavProps {
+  title: string
+  href: string
+  className?: string
+}
+
+const GameNav = ({ title, href, className }: GameNavProps) => {
   return (
-    <div className="bg-black/25 w-full p-3 text-white flex items-center justify-between sm:pt-0">
+    <div
+      className={cn(
+        'bg-black/25 w-full p-3 text-white flex items-center justify-between sm:pt-0 sticky top-0',
+        className
+      )}
+    >
       <Link href={href}>
         <ArrowLeftIcon size={20} />
       </Link>

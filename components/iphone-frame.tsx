@@ -50,7 +50,16 @@ export const IPhoneFrame = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           {/* Main screen */}
-          <div className="relative bg-transparent h-[680px]">{children}</div>
+          <div
+            className="relative bg-transparent h-[680px] overflow-auto scroll"
+            style={{
+              msOverflowStyle: 'none',
+              scrollbarWidth: 'none',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {children}
+          </div>
 
           {/* Bottom nav */}
           <div>
