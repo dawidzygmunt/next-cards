@@ -1,9 +1,5 @@
-import { useEffect, useState } from "react"
-
-import axios from "axios"
-import { Card as CardType } from "@prisma/client"
-import CardBasic from "@/components/card-basic"
-import axiosClient from "@/lib/api-client"
+import { useEffect, useState } from 'react'
+import axiosClient from '@/lib/api-client'
 
 const RenderPdf = () => {
   const [cards, setCards] = useState([])
@@ -12,12 +8,12 @@ const RenderPdf = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosClient.get("/api/v1/cards?page=1")
+        const response = await axiosClient.get('/api/v1/cards?page=1')
         setCards(response.data.cards)
-        setLoading(false) // Ustawiamy loading na false po pomyślnym pobraniu danych
+        setLoading(false)
       } catch (error) {
-        console.error("Błąd pobierania danych:", error)
-        setLoading(false) // Ustawiamy loading na false w przypadku błędu
+        console.error('Błąd pobierania danych:', error)
+        setLoading(false)
       }
     }
 
@@ -30,11 +26,7 @@ const RenderPdf = () => {
 
   return (
     <div className="flex justify-center gap-10 flex-wrap rounded-lg p-5">
-      {cards?.map((card: CardType) => (
-        <div key={card.id}>
-          <CardBasic data={card} key={card.id} />
-        </div>
-      ))}
+      <span>Feature disabled</span>
     </div>
   )
 }
