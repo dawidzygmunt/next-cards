@@ -1,7 +1,6 @@
 'use client'
 import deleteSingleCard from '@/actions/cards/delete-single-card'
 import {
-  ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
@@ -32,14 +31,15 @@ interface CardAllCardsProps {
 }
 
 const CardAllCards = ({ data }: CardAllCardsProps) => {
-  console.log(data)
-
   const handleDelete = async () => {
-    const result = deleteSingleCard(data.id)
+    const result = await deleteSingleCard(data.id)
     if ('error' in result) {
       toast.error('Something went wrong')
+      console.log(result)
+
       return
     }
+    console.log(result)
     toast.success('Card deleted successfully')
   }
 

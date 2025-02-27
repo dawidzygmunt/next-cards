@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const GameNav = ({ title, href }: { title: string; href: string }) => {
   return (
-    <div className="bg-black/25 w-full sticky top-0 p-3 text-white flex items-center justify-between">
+    <div className="bg-black/25 w-full p-3 text-white flex items-center justify-between sm:pt-0">
       <Link href={href}>
         <ArrowLeftIcon size={20} />
       </Link>

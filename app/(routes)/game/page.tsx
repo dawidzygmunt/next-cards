@@ -82,7 +82,7 @@ const Game = () => {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen justify-between">
+    <div className="flex flex-col items-center h-full justify-between">
       <div className="w-full flex flex-col items-center gap-8">
         <GameNav
           title="Prawda czy wyzwanie"
@@ -97,7 +97,7 @@ const Game = () => {
 
       {/* Truth and Dare buttons */}
       {(stage === 1 || stage === 5) && (
-        <div className="w-full flex flex-col text-center p-10 sm:px-24">
+        <div className="w-full flex flex-col text-center p-7">
           <Button
             onClick={handleTruth}
             disabled={mutationFn.isPending}
@@ -109,7 +109,7 @@ const Game = () => {
           <Button
             onClick={handleDare}
             disabled={mutationFn.isPending}
-            className="p-8 font-semibold shadow-md text-4xl uppercase"
+            className="p-8 font-semibold shadow-md text-4xl uppercase mx-0"
           >
             Wyzwanie
           </Button>
@@ -117,7 +117,7 @@ const Game = () => {
       )}
 
       {stage === 2 && (
-        <div className="w-full flex flex-col text-center p-10 px-24 gap-3 bg-black/20">
+        <div className="w-full flex flex-col text-center p-8 gap-3 bg-black/20 rounded-br-xl rounded-bl-xl">
           <Button
             onClick={handleNext}
             disabled={mutationFn.isPending}

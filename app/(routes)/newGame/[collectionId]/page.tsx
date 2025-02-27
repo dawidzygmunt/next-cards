@@ -90,12 +90,12 @@ const NewGame = ({ params }: { params: { collectionId: string } }) => {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-between">
+    <div className="h-full w-full flex flex-col justify-between">
       <GameNav
         title="dodaj graczy"
         href="/"
       />
-      <div className="flex flex-col items-center pt-10 lg:pt-16 px-7">
+      <div className="flex flex-col items-center px-7 pt-7">
         <div className="w-full">
           <div className="bg-white shadow-xl border border-black p-4 rounded-md mb-10 ">
             <Form {...form}>
@@ -103,7 +103,7 @@ const NewGame = ({ params }: { params: { collectionId: string } }) => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8 flex w-full"
               >
-                <div className="flex justify-between w-full h-[60px] gap-6 ">
+                <div className="flex justify-between w-full h-[70px] gap-4 ">
                   <FormField
                     control={form.control}
                     name="playerName"
@@ -113,7 +113,7 @@ const NewGame = ({ params }: { params: { collectionId: string } }) => {
                           <Input
                             placeholder="np. Tomek"
                             {...field}
-                            className="w-full min-w-[250px]"
+                            className="w-full"
                           />
                         </FormControl>
                         <FormMessage />
@@ -134,7 +134,7 @@ const NewGame = ({ params }: { params: { collectionId: string } }) => {
         </div>
 
         <ScrollArea
-          className="h-[400px] w-full"
+          className="h-[340px] w-full"
           // type="none"
         >
           <div className="flex flex-col w-full overflow-y-auto">
@@ -151,7 +151,7 @@ const NewGame = ({ params }: { params: { collectionId: string } }) => {
           </div>
         </ScrollArea>
       </div>
-      <div className="bg-black/15 w-full p-8">
+      <div className="bg-black/15 w-full p-8 rounded-bl-lg rounded-br-lg">
         <Button
           className="uppercase font-semibold text-4xl p-8 w-full "
           onClick={handleStartGame}
