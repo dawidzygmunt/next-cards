@@ -54,7 +54,7 @@ const ReportBug = () => {
 
   return (
     <>
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center hidden sm:flex">
         <IPhoneFrame>
           <GameNav
             href="/"
@@ -130,7 +130,13 @@ const ReportBug = () => {
           </div>
         </IPhoneFrame>
       </div>
-      <div className="flex w-full min-h-screen justify-center items-center bg-gradient-to-r from-violet-300 to-fuchsia-300 sm:hidden">
+
+      {/* Non iphone frame */}
+      <div className="flex flex-col w-full min-h-screen justify-center bg-gradient-to-r from-violet-300 to-fuchsia-300 sm:hidden">
+        <GameNav
+          href="/"
+          title="Zgłoś błąd"
+        />
         <div className="w-full lg:w-auto grid grid-cols-1 md:grid-cols-2 lg:px-24 ">
           <div className="rounded-s-xl shadow-xl md:max-h-[80vh]">
             <Image
@@ -138,7 +144,7 @@ const ReportBug = () => {
               alt="Descriptive text for screen readers "
               width={600}
               height={700}
-              className="rounded-s-xl object-cover md:max-h-[80vh] w-full h-full "
+              className="object-cover md:max-h-[80vh] w-full h-full "
             />
           </div>
 
@@ -190,7 +196,7 @@ const ReportBug = () => {
 
                 <Button
                   type="submit"
-                  className="rounded-3xl px-10 bg-purple-700"
+                  className="px-10 bg-[#ad4032] hover:bg-[#c74b3b]"
                 >
                   Wyślij
                 </Button>

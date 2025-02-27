@@ -12,7 +12,7 @@ const GameNav = ({ title, href, className }: GameNavProps) => {
   return (
     <div
       className={cn(
-        'bg-black/25 w-full p-3 text-white flex items-center justify-between sm:pt-0 sticky top-0',
+        'bg-black/25 w-full p-3 text-white flex items-center justify-between sm:pt-0',
         className
       )}
     >

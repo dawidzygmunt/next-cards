@@ -68,7 +68,7 @@ export async function GET(req: Request) {
         type: `Gratulacje! \n Koniec kart `,
         collectionId: 'test',
         amount: 1,
-        content: 'To już jest koniec - Jesteśmy wolni! \n Możemy już iść',
+        content: 'Wykorzystałeś wszystkie karty. Dzięki za gre!',
         createdAt: new Date(),
         updatedAt: new Date(),
         punishment: 0,
